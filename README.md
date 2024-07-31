@@ -301,7 +301,13 @@ function example4() {
 
 ## 0.3 JavaScript `Map`
 
+## 0.4 JavaScript 字符串
 
+`length()` 获取字符串长度，`toUpperCase()` 把一个字符串全部变为大写，`toLowerCase()` 变为小写。
+
+`indexOf()` 搜索指定字符串出现的位置，找到返回下标开始值，没找到返回-1。
+
+`substring()` 返回指定索引区间的字串。
 
 # 1. 哈希表与字符串、数组、双指针、滑动窗口、前缀和
 
