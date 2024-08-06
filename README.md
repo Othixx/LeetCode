@@ -502,6 +502,10 @@ https://www.icourse163.org/learn/ZJU-93001?tid=1468825451#/learn/content?type=de
 
 ## 平衡二叉树（AVL树）
 
+关于AVL树，一颗树是平衡的话，我们需要能够手撕RR、LL、RL、LR四种旋转方式。
+
+写代码的方式很简单。把每种情况模型抽象出来就行。
+
 # 6 栈、队列、堆
 
 ## 6.1 Leetcode 224 计算器——栈的灵活运用
