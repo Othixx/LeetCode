@@ -504,6 +504,24 @@ https://www.icourse163.org/learn/ZJU-93001?tid=1468825451#/learn/content?type=de
 
 此题的另一种解法是归并排序。见**LCR 170**。
 
+## 5.5 LeetCode 236 二叉树的最近公共祖先
+
+这个题，递归+分类讨论，没有任何套路，直接贴解法。**非常好的典型题。用于深刻理解递归。**
+
+```javascript
+var lowestCommonAncestor = function(root, p, q) {
+    if (root === null || root === p || root === q) {
+        return root;
+    }
+    const left = lowestCommonAncestor(root.left, p, q);
+    const right = lowestCommonAncestor(root.right, p, q);
+    if (left && right) {
+        return root;
+    }
+    return left ?? right;
+};
+```
+
 ## 平衡二叉树（AVL树）
 
 关于AVL树，一颗树是平衡的话，我们需要能够手撕RR、LL、RL、LR四种旋转方式。
