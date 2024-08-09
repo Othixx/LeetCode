@@ -508,6 +508,8 @@ https://www.icourse163.org/learn/ZJU-93001?tid=1468825451#/learn/content?type=de
 
 这个题，递归+分类讨论，没有任何套路，直接贴解法。**非常好的典型题。用于深刻理解递归。**
 
+![输入图片说明](imgs/lowestCommonAncestor.png)
+
 ```javascript
 var lowestCommonAncestor = function(root, p, q) {
     if (root === null || root === p || root === q) {
@@ -521,6 +523,8 @@ var lowestCommonAncestor = function(root, p, q) {
     return left ?? right;
 };
 ```
+
+
 
 ## 平衡二叉树（AVL树）
 
