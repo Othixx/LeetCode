@@ -332,6 +332,10 @@ for (let i = 0; i < n; i++) {
 
 注意：**JS使用"/"时不会默认向下取整。需要使用Math.floor()方法对括号内的值进行向下取整。**
 
+## 0.7 JavaScript `Set`
+
+JS的Set和C++的很像。它不含重复元素，所有的元素都是唯一的。参看这个https://blog.csdn.net/yiyueqinghui/article/details/107773347
+
 # 1. 哈希表与字符串、数组、双指针、滑动窗口、前缀和
 
 ## 1.1 滑动窗口
