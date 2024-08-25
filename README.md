@@ -348,6 +348,17 @@ JS的Set和C++的很像。它不含重复元素，所有的元素都是唯一的
 
 使用`parstInt()`方法。
 
+## 0.9 JS forEach 与 map
+
+```javascript
+// 使用Map的forEach方法遍历Map对象
+map.forEach((value, key) => {
+  console.log(`Key: ${key}, Value: ${value}`);
+});
+```
+
+forEach 方法是为 Map 对象设计的，它提供了一种更清晰和直接的方式来遍历键值对。如果你需要对 Map 进行复杂的遍历操作，使用 forEach 方法会是更好的选择。
+
 # 1. 哈希表与字符串、数组、双指针、滑动窗口、前缀和
 
 ## 1.1 滑动窗口
