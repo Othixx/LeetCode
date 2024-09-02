@@ -801,7 +801,7 @@ public:
 
 ![LeetCode 1143_2](./imgs/6.png)
 
-## 12.3 LeetCode 300 最长上升子序列
+## 12.3 LeetCode 300 最长上升子序列 LIS
 
 **典中典，务必掌握。**
 
