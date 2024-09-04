@@ -365,6 +365,76 @@ JS中的性能优化有很多种办法。在刷算法题的过程中，我们可
 
 - **尽量不要使用`undefined`：** 在JavaScript中，`undefined`是一个特殊的值，它表示一个变量未被赋值。使用`undefined`会导致代码的可读性和性能下降。应当尽量避免使用它，如果需要判断一个变量是否被赋值，可以使用`null`或其他合适的值来代替。
 
+## 0.11 JS求一个数组的最大值或最小值
+
+```javascript
+let max = Math.max(...nums);
+let min = Math.min(...nums);
+```
+
+**一定要加展开运算符！**上面这种方法适用于一整个数组，如果我要求一个数组的一部分的最大值或最小值，可以使用下面的方法：
+
+```javascript
+let max = Math.max(...nums.slice(0, 3));
+let min = Math.min(...nums.slice(0, 3));
+```
+
+## 0.12 JS `Sort`排序数组
+
+**这一部分至关重要。**
+
+### 数字排序
+    
+```javascript
+let arr = [1, 3, 2, 5, 4];
+arr.sort((a, b) => a - b);
+console.log(arr);   // [1, 2, 3, 4, 5]
+```
+
+### 字符串排序
+
+```javascript
+var arr = ["A","cds","esadf","As", "Ds"];
+arr.sort((a,b) => {
+    if(a.toLocaleLowerCase() < b.toLocaleLowerCase()) return -11;
+    else return 1;
+});
+console.log(arr);   // ['A', 'As', 'cds', 'Ds', 'esadf']
+
+```
+
+上面这种是全都转化为小写来比较大小。**如果不转化，那么默认大写字母在小写字母之前。**
+
+## 0.13 JS 字符串输出处理
+
+我们可以使用`join()`方法来把一个字符串数组连接成一个字符串，并且每个字符子串之间用空格进行分割。
+
+```javascript
+let arr = ['a', 'b', 'c'];
+let str = arr.join(' ');
+console.log(str);   // 'a b c'
+```
+
+## 0.14 Nodejs ACM 模式 输入输出模板
+
+```javascript
+const rl = require("readline").createInterface({ input: process.stdin });
+var iter = rl[Symbol.asyncIterator]();
+const readline = async () => (await iter.next()).value;
+
+void async function () {
+    // Write your code here
+    while(line = await readline()){
+        let tokens = line.split(' ');
+        let a = parseInt(tokens[0]);
+        let b = parseInt(tokens[1]);
+        console.log(a + b);
+    }
+    rl.close();     // 关闭输入输出流
+    process.exit();     // 退出程序
+}()
+```
+
 # 1. 哈希表与字符串、数组、双指针、滑动窗口、前缀和
 
 ## 1.1 滑动窗口
@@ -812,3 +882,7 @@ public:
 **典中典，务必掌握。**
 
 ![LeetCode 300](./imgs/7.png)
+
+## 12.4 LeetCode 152 乘积最大子数组
+
+这个题没啥好说的，关键难度在于状态转移方程的设计，2024.9.3是理解了，改天再拿来做一遍，如果做不出来就说明还没掌握。智商题。
