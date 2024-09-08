@@ -307,7 +307,32 @@ function example4() {
 
 总的来说，`function`关键字在JavaScript中扮演了多重角色，包括定义函数、构造函数和类。这使得JavaScript在面向对象编程方面具有很高的灵活性。
 
-## 0.3 JavaScript `Map`
+## 0.3 JavaScript `map` 方法
+
+**注意！这里描述的是map方法而不是Map这种类。这里的map是和forEach相对应。**
+
+在`forEach`中，我们相当于取了数组中的每一个值，对它们进行操作，请看下面的例子：
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+arr.forEach((value, index) => {
+    arr[index] = value * 2;
+});
+console.log(arr);   // [2, 4, 6, 8, 10]
+```
+
+这段代码相当于把`arr`的每一个值都乘以2，最终仍旧回到`arr`的内存中。
+
+而在`map`方法中，我们是直接返回一个新的数组，而不是在老数组上进行操作。最终老数组不变。请看下面的例子：
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+let newArr = arr.map((value) => {
+    return value * 2;
+});
+console.log(newArr);    // [2, 4, 6, 8, 10]
+console.log(arr);    // [1, 2, 3, 4, 5]
+```
 
 ## 0.4 JavaScript 字符串
 
@@ -348,7 +373,7 @@ JS的Set和C++的很像。它不含重复元素，所有的元素都是唯一的
 
 使用`parstInt()`方法。
 
-## 0.9 JS forEach 与 map
+## 0.9 JS 遍历 `Map`
 
 ```javascript
 // 使用Map的forEach方法遍历Map对象
@@ -435,11 +460,21 @@ void async function () {
 }()
 ```
 
+## 0.15 JS 求某一个字符的ASCII码
+
+```javascript
+let a = 'abc';
+let b = a.charCodeAt(0);
+console.log(b);     // 97
+```
+
+看上面的例子，对某一个字符串`a`求某个字符的ASCII码，只需要使用`a.charCodeAt(p)`即可，其中p为字符的下标。
+
 # 1. 哈希表与字符串、数组、双指针、滑动窗口、前缀和
 
 ## 1.1 滑动窗口
 
-**本节基于LeetCode 3。**
+**本节基于LeetCode 3。**（本题20240908已解决）
 
 关于滑动窗口，思路很简单。就是维护一个窗口，窗口的左右边界分别是left和right。然后，right向右移动，直到找到一个满足条件的窗口。然后，left向右移动，直到找到一个不满足条件的窗口。然后，再次重复上述过程。**要注意，left需要移动到第一个不满足题目要求的地方。**
 
