@@ -367,7 +367,20 @@ for (let i = 0; i < n; i++) {
 
 ## 0.7 JavaScript `Set`
 
-JS的Set和C++的很像。它不含重复元素，所有的元素都是唯一的。参看这个https://blog.csdn.net/yiyueqinghui/article/details/107773347
+JS的Set和C++的很像。它不含重复元素，所有的元素都是唯一的。**另外，这个`Set`它搜索、删除和插入元素方法的时间复杂度都是$O(1)$，这是因为它的底层是通过哈希表实现的。**参看这个https://blog.csdn.net/yiyueqinghui/article/details/107773347
+
+**此外，遍历`Set`时，得使用`for...of`方法，它不能通过索引访问，它不是Array。**
+
+```javascript
+let set = new Set();
+set.add(1);
+set.add(2);
+set.add(3);
+
+for (let item of set) {
+    console.log(item);
+}
+```
 
 ## 0.8 数字字符串转数字
 
@@ -499,6 +512,8 @@ console.log(b);     // 97
 **拉链法的优点是容易实现和理解，适用于处理哈希冲突，并且相对节省内存。然而，当哈希冲突较为频繁时，链表可能会变得很长，导致查找效率下降。为了避免这种情况，可以考虑在链表长度达到一定阈值时，将链表升级为更高效的数据结构，比如红黑树。**
 
 ## 1.3 LeetCode 128 最长连续序列
+
+(20240909还是不会)
 
 这个题需要掌握一个STL容器`unordered_set`。`unordered_set`是一个无序的集合，底层实现是哈希表。这个容器的插入、删除、查找操作的时间复杂度都是O(1)。
 
