@@ -1,6 +1,6 @@
-let numbers = [1,2,3,4,5];
-let doubled = numbers.map(function(number){
-    return number * 2;
+let testArray1 = [[1, 4], [7, 10], [3, 5]];
+testArray1.sort((a, b) => {
+    return a[0] - b[0];
 });
 
-console.log(doubled);
+console.log(testArray1);
