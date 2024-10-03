@@ -487,6 +487,26 @@ console.log(b);     // 97
 
 看上面的例子，对某一个字符串`a`求某个字符的ASCII码，只需要使用`a.charCodeAt(p)`即可，其中p为字符的下标。
 
+## 0.16 JS 将某个字符的ASCII码转为对应的字符
+
+```javascript
+let a = 97;
+let b = String.fromCharCode(a);
+console.log(b);     // 'a'
+```
+
+看上面的例子，对某一个ASCII码求对应的字符，只需要使用`String.fromCharCode(a)`即可。
+
+## 0.17 JS 将数组按照字符串输出，中间添加指定的字符相隔开
+
+```javascript
+let a = [1, 2, 3, 4, 5];
+let b = a.join('->');
+console.log(b);     // '1->2->3->4->5'
+```
+
+看上面的例子，对一个数组按照字符串输出，中间添加指定的字符相隔开，只需要使用`a.join('->')`即可。
+
 # 1. 哈希表与字符串、数组、双指针、滑动窗口、前缀和
 
 ## 1.1 滑动窗口
