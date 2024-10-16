@@ -497,16 +497,6 @@ console.log(b);     // 'a'
 
 看上面的例子，对某一个ASCII码求对应的字符，只需要使用`String.fromCharCode(a)`即可。
 
-## 0.17 JS 将数组按照字符串输出，中间添加指定的字符相隔开
-
-```javascript
-let a = [1, 2, 3, 4, 5];
-let b = a.join('->');
-console.log(b);     // '1->2->3->4->5'
-```
-
-看上面的例子，对一个数组按照字符串输出，中间添加指定的字符相隔开，只需要使用`a.join('->')`即可。
-
 # 1. 哈希表与字符串、数组、双指针、滑动窗口、前缀和
 
 ## 1.1 滑动窗口
@@ -997,3 +987,27 @@ public:
 ![8](./imgs/8.png)
 
 ![9](./imgs/9.png)
+
+## 12.6 LeetCode 53 最大子数组和
+
+不说了，直接上代码，20241006理解了，下次再拿出来刷：
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxSubArray = function (nums) {
+    let n = nums.length;
+    let dp = new Array(nums.length);
+    dp[n - 1] = nums[n - 1];
+    for (let i = n - 2; i >= 0; i--) {
+        dp[i] = nums[i] + Math.max(0, dp[i + 1]);
+    }
+    let ans = dp[0];
+    for (let i = 1; i < nums.length; i++) {
+        if (dp[i] > ans) ans = dp[i];
+    }
+    return ans;
+};
+```
