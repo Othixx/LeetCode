@@ -497,6 +497,83 @@ console.log(b);     // 'a'
 
 看上面的例子，对某一个ASCII码求对应的字符，只需要使用`String.fromCharCode(a)`即可。
 
+# 0. Java 要点
+
+为什么要用Java刷题呢，一是因为很多后端岗位普遍要求Java，二是因为CCF的一个首届CACC比赛必须使用C/C++/Python/Java四种语言中的一种。因此，我也会在这里记录一些Java的要点。
+
+## 0.1 Java `Scanner`类
+
+`Scanner`类是Java的一个类，用于获取用户的输入。下面是一个简单的例子：
+
+```java
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int a = scanner.nextInt();
+        int b = scanner.nextInt();
+        System.out.println(a + b);
+    }
+}
+```
+
+## 0.2 Java 排序数组
+
+Java中的数组排序可以使用`Arrays.sort()`方法。下面是一个简单的例子：
+
+```java
+import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {3, 1, 2, 5, 4};
+        Arrays.sort(arr);
+        for (int num : arr) {
+            System.out.print(num + " ");
+        }
+    }
+}
+```
+
+## 0.3 Java 初始化数组并填充
+
+Java中的数组初始化可以使用`new`关键字，而填充数组采用`Arrays.fill(arr, obj)`语句。下面是一个简单的例子：
+
+```java
+int[] arr = new int[5];
+Arrays.fill(arr, 1);    // 将数组arr填充为1
+```
+
+## 0.4 Java 和 JS 的一些区别
+
+由于本人在练习Java刷题之前，已经是一个比较成熟的JS选手，因此在这里记录一些Java和JS的一些区别，以便达到快速上手的目的。
+
+### 0.4.1 Java 中逻辑判断与JS的区别
+
+在Java中，条件判断的语句只能是`true`或`false`，而JS中，条件判断的语句可以是任何值。例如：
+
+```java
+// Java
+if (1) {    // 这样子写在Java中会报错
+    System.out.println("Hello, World!");
+}
+```
+
+上面这段代码在Java中会报错，因为条件判断的语句只能是`true`或`false`。而在JS中，这段代码是可以正常运行的。
+
+### 0.4.2 Java 判断两东西是否相等
+
+在Java中，判断两个东西是否相等，使用`==`，**记住，Java中只有双等于而没有三等于！** 而在JS中，判断两个东西是否相等，常常使用`===`，这是为了判断类型也相同。例如：
+
+```java
+// Java
+if (a == b) {
+    System.out.println("a equals b");
+}
+```
+
+
 # 1. 哈希表与字符串、数组、双指针、滑动窗口、前缀和
 
 ## 1.1 滑动窗口
