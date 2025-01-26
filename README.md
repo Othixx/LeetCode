@@ -354,10 +354,10 @@ console.log(arr);    // [1, 2, 3, 4, 5]
 
 ```javascript
 s = 'woshiniba';
-let sub = s.slice(0, 2);    // 'wo'
+let sub = s.slice(1, 3);    // 'os'
 ```
 
-它表示从0起始到（2-1）位置处结束。因此`slice(i,j)`代表从i开始j-1处结束。**注意，`s.slice()`方法并不会改变原来的`s`字符串中的数据！**
+它表示从0起始到（2-1）位置处结束。因此`slice(i,j)`代表从i开始j-1处结束。**注意，`s.slice()`方法并不会改变原来的`s`字符串中的数据！** 此外，如果你想要从i开始一直到最后，那么只需要`slice(i)`即可。
 
 ## 0.5 JavaScript 多维数组
 
