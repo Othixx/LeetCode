@@ -541,6 +541,16 @@ console.log(arr);   // [1, 2, 4, 5]
 
 **同样地，替换元素在结合了插入和删除元素之后可以直接搞定。**
 
+## 0.19 JS 在数组中选出最大值
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+let max = Math.max(...arr);
+console.log(max);    // 5
+```
+
+道理其实很简单，**但注意一定要在`Math.max()`的括号中加上...。**
+
 # 0. Java 要点
 
 为什么要用Java刷题呢，一是因为很多后端岗位普遍要求Java，二是因为CCF的一个首届CACC比赛必须使用C/C++/Python/Java四种语言中的一种。因此，我也会在这里记录一些Java的要点。
