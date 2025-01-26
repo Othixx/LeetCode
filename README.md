@@ -394,7 +394,7 @@ for (let item of set) {
 
 ## 0.8 数字字符串转数字
 
-使用`parstInt()`方法。
+使用`parseInt()`方法。
 
 ## 0.9 JS 遍历 `Map`
 
