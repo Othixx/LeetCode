@@ -371,6 +371,19 @@ for (let i = 0; i < n; i++) {
 }
 ```
 
+### 0.5.1 数组嵌套空数组对象
+
+尤其注意，如果你要生成一个数组，里面的元素是空数组对象，那么你需要这样写：
+
+```javascript
+// let dp = new Array(n).fill([]);    // 这样写是不行的
+let hashList = new Array(n);
+for(let i = 0; i < n; i++){
+    hashList[i] = new Array();  // 这样写ok
+}
+```
+
+
 ## 0.6 除法
 
 注意：**JS使用"/"时不会默认向下取整。需要使用Math.floor()方法对括号内的值进行向下取整。**
