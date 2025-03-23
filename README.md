@@ -1683,3 +1683,34 @@ private int dfs(int x, int fa, List<Integer>[] g) {
     return maxLen;
 }
 ```
+
+## 12.14 树形DP②：树上最大独立集
+
+最大独立集是指，在一个图中选择尽量多的点，使得这些点互不相邻。由于树是特殊的图，因此在这里也成立。
+
+那么一个变形就是下面的337题，**使最大化点权之和。**
+
+### 12.14.1 LeetCode 337 打家劫舍III
+
+这道题20250323首刷。一开始我想在一个dfs中直接调两个dfs，但很可惜超时了。原因是，一个调两次，那么两个调四次，$n$个就会调$2^n$次，超时是必然的。
+
+而如果直接沿用打家劫舍I的思想，也行不通，因为在一棵树中，隔点访问必然涉及判断树是否为空的过程，代码写起来非常的复杂。
+
+那么怎么办呢，方法是，可以一次性直接返回两个状态。由于代码很简洁，我直接在这里放代码：
+
+```javascript
+function dfs(node) {
+    if (node === null) { // 递归边界
+        return [0, 0]; // 没有节点，怎么选都是 0
+    }
+    const [lRob, lNotRob] = dfs(node.left); // 递归左子树
+    const [rRob, rNotRob] = dfs(node.right); // 递归右子树
+    const rob = lNotRob + rNotRob + node.val; // 选
+    const notRob = Math.max(lRob, lNotRob) + Math.max(rRob, rNotRob); // 不选
+    return [rob, notRob];
+}
+
+var rob = function(root) {
+    return Math.max(...dfs(root)); // 根节点选或不选的最大值
+};
+```
