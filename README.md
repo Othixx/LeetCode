@@ -1201,11 +1201,7 @@ public:
 
 堆排序的思想是，我们先用`O(n)`时间或者`O(nlogn)`时间可以建立起一个堆，接着，我们每次删除堆顶元素，然后把堆的最末尾元素放到堆顶，然后调整堆（这样子从堆顶出来的数据一定有序），使得堆满足堆的性质，这又需要`O(nlogn)`的时间。这样子，我们就可以在`O(nlogn)`的时间内完成排序。
 
-## 6.5 单调队列 LeetCode 239 —— 滑动窗口最大值
-
-这道题是一道经典的单调队列题。单调队列的特点是，队列中的元素是单调递增或者单调递减的。这样子，我们可以在O(1)的时间复杂度内找到队列中的最大值或者最小值。
-
-这道题20240714首刷，20250407二刷，还是不会做，非常经典，三刷还是应该再做一做。
+## 6.5 单调队列 
 
 **单调队列套路：**
 
@@ -1216,6 +1212,50 @@ public:
 在C++语言下，我们使用`deque`来实现单调队列。`deque`是一个双端队列，可以在队首和队尾进行插入和删除操作。**需要注意的是，`deque`也可以支持随机访问，它是除了`vector` `string`外又一个可以使用`[]`访问的容器。**
 
 `deque`的操作方法也很简单，加上队首只是相比于`vector`多了`pop_front()`和`push_front()`方法。
+
+### 6.5.1 LeetCode 239 —— 滑动窗口最大值
+
+这道题是一道经典的单调队列题。单调队列的特点是，队列中的元素是单调递增或者单调递减的。这样子，我们可以在O(1)的时间复杂度内找到队列中的最大值或者最小值。
+
+这道题20240714首刷，20250407二刷，还是不会做，非常经典，三刷还是应该再做一做。
+
+### 6.5.2 LeetCode 1438 绝对差不超过限制的最长连续子数组
+
+这是上面第239题的变形，解法十分巧妙，20250408首刷，目前还没有合适的题解，直接看代码，二刷一定要做，非常精悍。
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @param {number} limit
+ * @return {number}
+ */
+var longestSubarray = function (nums, limit) {
+    let qmax = [];  // 最大值队列
+    let qmin = [];  // 最小值队列
+    let ans = 0;
+    let l = 0;
+    for (let i = 0; i < nums.length; i++) {
+        while (qmax.length !== 0 && nums[qmax[qmax.length - 1]] < nums[i]) {
+            qmax.pop();
+        }
+        qmax.push(i);
+        while (qmin.length !== 0 && nums[qmin[qmin.length - 1]] > nums[i]) {
+            qmin.pop();
+        }
+        qmin.push(i);
+
+        while (qmax.length !== 0 && qmin.length !== 0 && Math.abs(nums[qmax[0]] - nums[qmin[0]]) > limit) {
+            if (nums[qmax[0]] === nums[l]) qmax.shift();
+            if (nums[qmin[0]] === nums[l]) qmin.shift();
+            l++;
+        }
+
+        ans = Math.max(ans, i - l + 1);
+    }
+
+    return ans;
+};
+```
 
 ## 6.6 单调栈
 
