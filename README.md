@@ -392,7 +392,7 @@ for(let i = 0; i < n; i++){
 
 ## 0.7 JavaScript `Set`
 
-JS的Set和C++的很像。它不含重复元素，所有的元素都是唯一的。**另外，这个`Set`它搜索、删除和插入元素方法的时间复杂度都是$O(1)$，这是因为它的底层是通过哈希表实现的。**参看这个https://blog.csdn.net/yiyueqinghui/article/details/107773347
+JS的Set和C++的很像。它不含重复元素，所有的元素都是唯一的。**另外，这个`Set`它搜索、删除和插入元素方法的时间复杂度都是$O(1)$，这是因为它的底层是通过哈希表实现的。** 参看这个https://blog.csdn.net/yiyueqinghui/article/details/107773347
 
 **此外，遍历`Set`时，得使用`for...of`方法，它不能通过索引访问，它不是Array。**
 
@@ -407,11 +407,27 @@ for (let item of set) {
 }
 ```
 
+此外，JS中循环还有一个`for...in`方法，你还记得它是用来遍历对象属性的吗？https://zh.javascript.info/object#forin
+
+### 0.7.1 使用`Set`去重
+
+使用`Set`去重非常简单，只需要把数组传入`Set`构造函数中，然后再将其转换为数组即可。**它的时间复杂度是$O(1)$的，非常高效，所以算法题里面经常使用，需要牢记。** 下面是一个示例：
+
+```javascript
+let arr = [1, 2, 3, 1, 2, 4];
+let uniqueArr = [...new Set(arr)];
+console.log(uniqueArr);   // [1, 2, 3, 4]
+```
+
 ## 0.8 数字字符串转数字
 
 使用`parseInt()`方法。
 
-## 0.9 JS 遍历 `Map`
+## 0.9 JS `Map`
+
+`Map`是ES6引入的一种新的数据结构，它允许我们使用对象作为键，并且保持键值对的插入顺序。这一类数据结构很重要，原因是它可以解决我们哈希表类型的题目，它的效率很高。**注意：JS中是不存在专门的哈希表的数据结构的。**
+
+### 0.9.1 JS 遍历 `Map`
 
 ```javascript
 // 使用Map的forEach方法遍历Map对象
@@ -421,6 +437,47 @@ map.forEach((value, key) => {
 ```
 
 forEach 方法是为 Map 对象设计的，它提供了一种更清晰和直接的方式来遍历键值对。如果你需要对 Map 进行复杂的遍历操作，使用 forEach 方法会是更好的选择。
+
+### 0.9.2 JS `Map`的常用方法
+
+常用的方法有：
+
+- `set(key, value)`：添加或更新一个键值对
+- `get(key)`：根据键获取对应的值，如果不存在返回 `undefined`
+- `has(key)`：判断是否存在某个键
+- `delete(key)`：删除指定键对应的值
+- `clear()`：清空所有的键值对
+- `size` 属性：返回当前 Map 中元素的数量
+
+示例代码如下：
+
+````javascript
+const map = new Map();
+
+// 添加键值对
+map.set('name', 'Alice');
+map.set(1, [10, 20, 30]);
+map.set({ id: 1 }, 'objectKey');
+
+// 获取值
+console.log(map.get('name')); // 输出: Alice
+
+// 判断是否存在
+console.log(map.has(1)); // 输出: true
+
+// 遍历 Map
+for (const [key, value] of map) {
+    console.log(key, value);
+}
+
+// 删除键值对
+map.delete('name');
+
+// 获取 Map 的大小
+console.log(map.size); // 输出当前 Map 中剩余的元素数量
+````
+
+Map 对象非常适合用于需要键的多种类型以及保持插入顺序的场景。**此外，由于Map内部根据哈希表实现，因此查找、添加、删除的平均性能都接近$O(1)$。**
 
 ## 0.10 JS中的性能优化
 
@@ -435,7 +492,7 @@ let max = Math.max(...nums);
 let min = Math.min(...nums);
 ```
 
-**一定要加展开运算符！**上面这种方法适用于一整个数组，如果我要求一个数组的一部分的最大值或最小值，可以使用下面的方法：
+**一定要加展开运算符！**（可以这样理解：如果不加展开运算符，那么传入`max()`函数的就是一个对象，单个对象是没办法求最值的，通过展开运算符展开之后，数组就被拆成了一个个独立的数字参数，就能够正确求最值了。）上面这种方法适用于一整个数组，如果我要求一个数组的一部分的最大值或最小值，可以使用下面的方法：
 
 ```javascript
 let max = Math.max(...nums.slice(0, 3));
@@ -565,6 +622,63 @@ console.log(max);    // 5
 ```
 
 道理其实很简单，**但注意一定要在`Math.max()`的括号中加上...。**
+
+## 0.20 循环：for...of
+
+使用`for...of`循环可以遍历数组、字符串、Map、Set等可迭代对象。它会返回每个元素的值，而不是索引，它不能获取当前元素的索引，只是获取元素值，但大多数情况是够用的。而且这样写更短。下面为一些示例：
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+for (let value of arr) {
+    console.log(value);   // 1 2 3 4 5
+}
+```
+
+```javascript
+let str = "Hello";
+for (let char of str) {
+    console.log(char);   // H e l l o
+}
+```
+
+```javascript
+let map = new Map([["a", 1], ["b", 2]]);
+for (let [key, value] of map) {
+    console.log(key, value);   // a 1 b 2
+}
+```
+
+**注意，对于`Map`对象，ES6还提供了更为简洁的`forEach`遍历方法，不要忘了这个方法。**
+
+```javascript
+let set = new Set([1, 2, 3]);
+for (let value of set) {
+    console.log(value);   // 1 2 3
+}
+```
+
+## 0.21 JS中处理大数运算：BigInt
+
+创建BigInt对象的方法有两种：
+
+1. 使用`BigInt()`函数：可以将一个数字或字符串转换为BigInt类型。
+2. 使用`n`后缀：在数字后面加上`n`，表示这个数字是一个BigInt类型。
+
+```javascript
+let bigInt1 = BigInt(12345678901234567890); // 使用BigInt函数
+let bigInt2 = 12345678901234567890n; // 使用n后缀
+
+console.log(bigInt1); // 输出: 12345678901234567890n
+console.log(bigInt2); // 输出: 12345678901234567890n
+```
+
+而将BigInt转换为普通数字时，可以使用`Number()`函数。需要注意的是，如果BigInt的值超出了Number的范围，转换可能会导致精度丢失。
+
+```javascript
+let bigInt = 12345678901234567890n;
+let num = Number(bigInt); // 转换为普通数字
+console.log(num); // 输出: 12345678901234567000（可能会丢失精度）
+```
 
 # 0. Java 要点
 
