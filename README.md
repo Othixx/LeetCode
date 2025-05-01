@@ -419,6 +419,41 @@ let uniqueArr = [...new Set(arr)];
 console.log(uniqueArr);   // [1, 2, 3, 4]
 ```
 
+### 0.7.2 `Set`的常用方法
+
+```javascript
+// 创建一个新的 Set 对象
+let mySet = new Set([1, 2, 3, 4, 5]);
+
+// 添加元素
+mySet.add(6); // 添加单个元素
+mySet.add(7);
+mySet.add(8); // 添加单个元素
+mySet.add(1); // 添加重复元素，不会生效
+
+// 删除元素
+mySet.delete(2); // 删除元素2
+mySet.delete(9); // 删除不存在的元素，不会报错
+
+// 检查元素是否存在
+console.log(mySet.has(3)); // true
+console.log(mySet.has(10)); // false
+
+// 获取 Set 的大小
+console.log(mySet.size); // 6
+
+// 遍历 Set
+mySet.forEach((value) => {
+    console.log(value); // 输出每个元素
+});
+
+// 清空 Set
+mySet.clear(); // 清空所有元素
+console.log(mySet.size); // 0
+```
+
+`has`方法可以在O(1)的时间内查找一个元素是否在`Set`中。`add`方法可以在O(1)的时间内添加一个元素到`Set`中。`delete`方法可以在O(1)的时间内删除一个元素。
+
 ## 0.8 数字字符串转数字
 
 使用`parseInt()`方法。
@@ -1093,6 +1128,8 @@ class NumMatrix {
 链表的题大多与指针相关，这里需要记住，**在设置指针时一定要首先置空，避免出现野指针的情况。**
 
 此外，在进行链表节点的更改时，同时也需要记得一次性修改好多节点，思维一定要清楚，需要及时进行验证（参考LeetCode 24的教训，想当然但是实际情况不是这样）。
+
+**另外，什么时候需要添加哨兵节点呢，一般而言，如果我们需要对头节点进行改动，那么加上哨兵节点是为了找到链表的开始，如果不对头节点改动可以省略哨兵节点。** 如果想不明白，那么就默认都加哨兵节点就可以。
 
 ## 2.1 链表倒序
 
