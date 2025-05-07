@@ -1208,7 +1208,44 @@ int binarySearch(vector<int>& nums, int target) {
 
 **至于变式，主要喜欢在left right还有mid上面做文章，喜欢+1-1，或者考你错误的二分解法，为什么不可以此类。**
 
-### 5.1.1 LeetCode 108
+### 5.1.1 LeetCode 34 题带来的启示
+
+**二分查找，本质上需要牢记区间的定义！区间内的数（下标）都是还未确定与 target 的大小关系的，有的是 < target，有的是 ≥ target；区间外的数（下标）都是确定与 target 的大小关系的。**
+
+![alt text](image-18.png)
+
+一般来说，有上面图片中出现的四个问题：
+
+- 返回有序数组中第一个 ≥ target 的下标。这是我们的板子，下面的题都可以转换成这个问题。
+- 返回有序数组中第一个 > target 的下标。这就可以等价转换到第一个问题，**即返回第一个 ≥ (target + 1) 的下标**。
+- 返回有序数组中最后一个 < target 的下标。也可以等价转换到第一个问题，**即返回第一个 ≥ target 的下标，这个下标再减1即为所求**。
+- 返回有序数组中最后一个 ≤ target 的下标。可以先等价转换到第二个问题，**即返回第一个 > target 的下标，这个下标再减1即为所求**。接着把前半部分转换到第一个问题就是所求。
+
+针对34题，给出了一个二分模板：
+
+```javascript
+let lowerBound = function (nums, target) {
+    let n = nums.length;
+    let a = 0;
+    let b = n - 1;
+    let mid = Math.floor((a + b) / 2);
+    while (a <= b) {
+        if (nums[mid] >= target) {
+            b = mid - 1;
+            mid = Math.floor((a + b) / 2);
+        }
+        else if (nums[mid] < target) {
+            a = mid + 1;
+            mid = Math.floor((a + b) / 2);
+        }
+    }
+    return a;
+}
+```
+
+怎么去想a和b什么时候直接等于mid，什么时候要+1 -1？就是看**区间的定义**。区间里面哪些数字是已经确定了大小，哪些数字还要再次确定大小。上面的板子是左闭右闭区间形式，还有左闭右开、全开区间等形式，只需要掌握一个就可以，空余时间可以多想想。
+
+### 5.1.2 LeetCode 108
 
 这个题可以直接使用二分查找的思想。mid作为根节点，然后左右分别递归建立树即可。感觉得把这题背下来。没遇到过可能想不出来。
 
