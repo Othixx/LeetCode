@@ -1,0 +1,39 @@
+/**
+ * @param {number[][]} grid
+ * @param {number} k
+ * @return {number[][]}
+ */
+var minAbsDiff = function (grid, k) {
+    let m = grid.length;
+    let n = grid[0].length;
+    let ans = new Array(m - k + 1);
+    for (let i = 0; i < m - k + 1; i++) {
+        ans[i] = new Array(n - k + 1);
+    }
+
+    let calculateMin = function (i, j, k) {
+        if(k === 1) return 0;
+        let temp = [];
+        for (let p = i; p < i + k; p++) {
+            for (let q = j; q < j + k; q++) {
+                temp.push(grid[p][q]);
+            }
+        }
+        temp.sort((a, b) => a - b);
+        let ans = Infinity;
+        for (let i = 1; i < temp.length; i++) {
+            ans = Math.min(ans, Math.abs(temp[i] - temp[i - 1]));
+        }
+        return ans;
+    };
+    for (let i = 0; i < m - k + 1; i++) {
+        for (let j = 0; j < n - k + 1; j++) {
+            ans[i][j] = calculateMin(i, j, k);
+        }
+    }
+    return ans;
+};
+
+let grid = [[1,-2,3],[2,3,5]];
+let k = 2;
+console.log(minAbsDiff(grid, k)); 
