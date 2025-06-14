@@ -454,6 +454,18 @@ console.log(mySet.size); // 0
 
 `has`方法可以在O(1)的时间内查找一个元素是否在`Set`中。`add`方法可以在O(1)的时间内添加一个元素到`Set`中。`delete`方法可以在O(1)的时间内删除一个元素。
 
+### 0.7.3 取`Set`的第一个元素
+
+对于`Set`，元素出现的顺序和我们插入的顺序是一致的。在很多题目中，我们需要取`Set`的第一个元素。可以使用`values()`方法获取一个迭代器，然后使用`next()`方法获取第一个元素。示例代码如下：
+
+```javascript
+let mySet = new Set([1, 2, 3, 4, 5]);
+let firstElement = mySet.values().next().value;
+console.log(firstElement); // 输出: 1
+```
+
+**需要注意的是，没有直接的办法可以在$O(1)$的时间内获取`Set`的最后一个元素。**
+
 ## 0.8 数字字符串转数字
 
 使用`parseInt()`方法。
@@ -513,6 +525,20 @@ console.log(map.size); // 输出当前 Map 中剩余的元素数量
 ````
 
 Map 对象非常适合用于需要键的多种类型以及保持插入顺序的场景。**此外，由于Map内部根据哈希表实现，因此查找、添加、删除的平均性能都接近$O(1)$。**
+
+### 0.9.3 取`Map`的第一个元素
+
+和`Set`一样，`Map`也可以获取一个迭代器，然后使用`next()`方法获取第一个元素。需要注意的是，对于`Map`，我们可以使用`entries()`方法获取一个包含所有键值对的迭代器，使用`keys()`方法获取所有键的迭代器，使用`values()`方法获取所有值的迭代器。示例代码如下：
+
+```javascript
+let myMap = new Map([['a', 1], ['b', 2], ['c', 3]]);
+let firstEntry = myMap.entries().next().value;
+console.log(firstEntry); // 输出: ['a', 1]
+let firstKey = myMap.keys().next().value;
+console.log(firstKey); // 输出: 'a'
+let firstValue = myMap.values().next().value;
+console.log(firstValue); // 输出: 1
+```
 
 ## 0.10 JS中的性能优化
 
@@ -715,6 +741,16 @@ console.log(bigInt2); // 输出: 12345678901234567890n
 let bigInt = 12345678901234567890n;
 let num = Number(bigInt); // 转换为普通数字
 console.log(num); // 输出: 12345678901234567000（可能会丢失精度）
+```
+
+## 0.22 JS 空值合并运算符
+
+空值合并运算符（`??`）是 JavaScript 中的一种逻辑运算符，用于处理可能为 `null` 或 `undefined` 的值。它的作用是返回其左侧操作数，如果左侧操作数为 `null` 或 `undefined`，则返回右侧操作数。
+```javascript
+let a = null;
+let b = 5;
+let c = a ?? b; // 如果 a 是 null 或 undefined，则 c 的值为 b
+console.log(c); // 输出: 5
 ```
 
 # 0. Java 要点
@@ -1130,6 +1166,33 @@ class NumMatrix {
 ![alt text](image-21.png)
 ![alt text](image-22.png)
 
+## 1.13 前缀和+哈希表 560 和为K的子数组、437 路径总和III
+
+这两道题很相似，一题是在数组中使用前缀和+哈希表，另一题是在树中使用递归+哈希表。你必须先弄明白 560 题（特殊情况），再来做437题（一般情况）。20250614首刷437，20240713首刷560。给一个437题的代码，细品：
+```javascript
+const pathSum = function(root, targetSum) {
+    let ans = 0;
+    const cnt = new Map();
+    cnt.set(0, 1); // 把 s[0] = 0 统计进来
+    function dfs(node, s) {
+        if (node === null) {
+            return;
+        }
+
+        s += node.val;
+        // 把 node 当作路径的终点，统计有多少个起点
+        ans += cnt.get(s - targetSum) ?? 0;
+
+        cnt.set(s, (cnt.get(s) ?? 0) + 1);
+        dfs(node.left, s);
+        dfs(node.right, s);
+        cnt.set(s, cnt.get(s) - 1); // 恢复现场
+    }
+    dfs(root, 0);
+    return ans;
+};
+```
+
 # 2. 链表
 
 ## 2.0 概述
@@ -1256,7 +1319,7 @@ let lowerBound = function (nums, target) {
 
 ### 5.1.2 LeetCode 108
 
-这个题可以直接使用二分查找的思想。mid作为根节点，然后左右分别递归建立树即可。感觉得把这题背下来。没遇到过可能想不出来。
+这个题可以直接使用二分查找的思想。mid作为根节点，然后左右分别递归建立树即可。**感觉得把这题背下来。没遇到过可能想不出来。** 20250612二刷。
 
 ### 5.1.3 LeetCode 2439 最小化数组中的最大值 二分答案
 
