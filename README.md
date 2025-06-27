@@ -1193,6 +1193,17 @@ const pathSum = function(root, targetSum) {
 };
 ```
 
+## 1.14 LeetCode 41 缺失的第一个正数
+
+这道题是**原地哈希**。20250627首刷，不是很理解，感觉只能死记硬背方法。灵神的方法是：
+
+![alt text](image-23.png)
+![alt text](image-24.png)
+![alt text](image-25.png)
+![alt text](image-26.png)
+
+**实在是太难搞懂了，期待二刷！**
+
 # 2. 链表
 
 ## 2.0 概述
