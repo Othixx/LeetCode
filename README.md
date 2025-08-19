@@ -1268,6 +1268,48 @@ vector<vector<int>> edges;
 
 ## 4.2 LeetCode 207 课程表拓扑排序
 
+## 4.3 LeetCode 743 网络延迟时间 单源最短路 Dijkstra 算法
+
+这道题是经典的Dijkstra算法模板题。Dijkstra算法是解决单源最短路径问题的经典算法，适用于图中所有边的权值**非负**的情况。我们来看一下这个算法的流程：
+![alt text](image-34.png)
+![alt text](image-35.png)
+
+在实现上，我们有两种实现方式，一种是时间空间复杂度均为 $O(n^2)$ 的朴素实现，另一种是使用堆，时空复杂度更优的实现。对于前者的朴素算法，适用于稠密图，也就是边的数量是 $n^2$ 数量级相当的图。后者采用堆优化法，适用于稀疏图，也就是边的长度远小于 $n^2$ 的图。
+
+在下面，我们给出743题的Dijkstra算法的JS代码：
+
+```javascript
+var networkDelayTime = function(times, n, k) {
+    const g = Array.from({length: n}, () => Array(n).fill(Infinity)); // 邻接矩阵
+    for (const [x, y, d] of times) {
+        g[x - 1][y - 1] = d;
+    }
+
+    const dis = Array(n).fill(Infinity);
+    dis[k - 1] = 0;
+    const done = Array(n).fill(false);
+    while (true) {
+        let x = -1;
+        for (let i = 0; i < n; i++) {
+            if (!done[i] && (x < 0 || dis[i] < dis[x])) {
+                x = i;
+            }
+        }
+        if (x < 0) {
+            return Math.max(...dis);
+        }
+        if (dis[x] === Infinity) { // 有节点无法到达
+            return -1;
+        }
+        done[x] = true; // 最短路长度已确定（无法变得更小）
+        for (let y = 0; y < n; y++) {
+            // 更新 x 的邻居的最短路
+            dis[y] = Math.min(dis[y], dis[x] + g[x][y]);
+        }
+    }
+};
+```
+
 # 5 二分查找 && 二叉查找树
 
 关于树，需要知道几种特殊的树的定义和性质：
