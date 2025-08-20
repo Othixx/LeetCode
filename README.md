@@ -753,6 +753,87 @@ let c = a ?? b; // 如果 a 是 null 或 undefined，则 c 的值为 b
 console.log(c); // 输出: 5
 ```
 
+## 0.23 JS LeetCode 进阶技巧——`datastructures-js/priority-queue`库
+
+在LeetCode中，有很多题目需要用到优先队列（Priority Queue）或者堆这种数据结构。JavaScript本身并没有内置优先队列的数据结构，但我们可以使用第三方库`datastructures-js/priority-queue`来实现。这个库已经被附在LeetCode的代码编辑器中，可以直接使用。
+
+该库提供了 5 种主要的优先级队列类型，它们的区别主要在于底层实现和性能特性上：
+
+1. `MinPriorityQueue` - 最小优先级队列（优先级数字越小，优先级越高）
+
+2. `MaxPriorityQueue` - 最大优先级队列（优先级数字越大，优先级越高）
+
+3. `MinPriorityQueue` (基于堆实现)
+
+4. `MaxPriorityQueue` (基于堆实现)
+
+5. `PriorityQueue` (基于最小堆实现)
+
+最常用的是前两种，因为它们提供了最直观的 API。我们将重点介绍 `MinPriorityQueue`。优先级值最小的元素位于队列前端。
+
+```javascript
+// 导入（LeetCode里可以略去）
+const { MinPriorityQueue } = require('@datastructures-js/priority-queue');
+// 或者 ES6 语法
+import { MinPriorityQueue } from '@datastructures-js/priority-queue';
+
+// 创建一个最小优先级队列实例
+const minQueue = new MinPriorityQueue();
+
+// 入队元素。你可以提供一个可选的自定义优先级
+// 方式一：只提供元素（优先级默认为元素本身，如果元素是数字）
+minQueue.enqueue(5);
+minQueue.enqueue(3);
+minQueue.enqueue(8);
+// 现在队列：[3, 5, 8]，3 是队首
+
+// 方式二：提供元素和优先级（推荐，更清晰）
+minQueue.enqueue('task_medium', 2);
+minQueue.enqueue('task_low’, 5);
+minQueue.enqueue('task_high’, 1);
+// 现在队列： [‘task_high’ (prio:1), ‘task_medium’ (prio:2), ‘task_low’ (prio:5)]
+
+// 查看队首元素（优先级最高的，即最小的）但不移除
+const frontElement = minQueue.front(); // ‘task_high’
+console.log(frontElement); // 输出: ‘task_high’
+
+// 出队（移除并返回队首元素）
+const highestPriority = minQueue.dequeue(); // ‘task_high’
+console.log(highestPriority); // 输出: ‘task_high’
+// 现在队列： [‘task_medium’ (prio:2), ‘task_low’ (prio:5)]
+
+// 获取队列大小
+const size = minQueue.size(); // 2
+console.log(size);
+
+// 检查队列是否为空
+const isEmpty = minQueue.isEmpty(); // false
+console.log(isEmpty);
+
+// 清空队列
+minQueue.clear();
+console.log(minQueue.size()); // 0
+console.log(minQueue.isEmpty()); // true
+```
+
+还有个常见的用法，对于优先级，在构造时，我们也可以显式指定一个回调函数，例如：`new MinPriorityQueue(e => e[0])`。当你像这样在构造函数中传入一个回调函数时，这个函数被称为 "优先级获取器" (Priority Callback)。这个回调函数的作用是：告诉队列如何从你传入的复杂元素对象中提取出优先级数值。
+
+在没有优先级获取器的情况下，你需要在 `enqueue` 时显式指定优先级：
+
+```javascript
+const pq = new MinPriorityQueue();
+pq.enqueue(['task1', 'some data'], 5); // 必须传入优先级 5
+pq.enqueue(['task2', 'more data'], 3);
+```
+
+有了优先级获取器后，队列会自动从元素中提取优先级：
+
+```javascript
+const pq = new MinPriorityQueue(e => e[0]); // 告诉队列：优先级是元素的第一个值
+pq.enqueue([5, 'task1', 'some data']);      // 自动提取 5 作为优先级
+pq.enqueue([3, 'task2', 'more data']);      // 自动提取 3 作为优先级
+```
+
 # 0. Java 要点
 
 为什么要用Java刷题呢，一是因为很多后端岗位普遍要求Java，二是因为CCF的一个首届CACC比赛必须使用C/C++/Python/Java四种语言中的一种。因此，我也会在这里记录一些Java的要点。
@@ -1276,7 +1357,7 @@ vector<vector<int>> edges;
 
 在实现上，我们有两种实现方式，一种是时间空间复杂度均为 $O(n^2)$ 的朴素实现，另一种是使用堆，时空复杂度更优的实现。对于前者的朴素算法，适用于稠密图，也就是边的数量是 $n^2$ 数量级相当的图。后者采用堆优化法，适用于稀疏图，也就是边的长度远小于 $n^2$ 的图。
 
-在下面，我们给出743题的Dijkstra算法的JS代码：
+在下面，我们先给出743题的Dijkstra算法，适用于稠密图的的JS代码，对于稠密图我们使用邻接矩阵的方式去存储：
 
 ```javascript
 var networkDelayTime = function(times, n, k) {
@@ -1310,16 +1391,56 @@ var networkDelayTime = function(times, n, k) {
 };
 ```
 
+接着，我们采用堆优化方式，给出Dijkstra算法的JS代码。请注意，对于稀疏图的存储方式，我们一般使用邻接表，而不使用邻接矩阵去存储：
+
+```javascript
+var networkDelayTime = function(times, n, k) {
+    const g = Array.from({length: n}, () => []); // 邻接表
+    for (const [x, y, d] of times) {
+        g[x - 1].push([y - 1, d]);
+    }
+
+    const dis = Array(n).fill(Infinity);
+    dis[k - 1] = 0;
+    const pq = new MinPriorityQueue(e => e[0]);
+    pq.enqueue([0, k - 1]);
+    while (!pq.isEmpty()) {
+        const [dx, x] = pq.dequeue();
+        if (dx > dis[x]) { // x 之前出堆过
+            continue;
+        }
+        for (const [y, d] of g[x]) {
+            const newDis = dx + d;
+            if (newDis < dis[y]) {
+                dis[y] = newDis; // 更新 x 的邻居的最短路
+                pq.enqueue([newDis, y]);
+            }
+        }
+    }
+    const mx = Math.max(...dis);
+    return mx < Infinity ? mx : -1;
+};
+```
+
+这个题实在经典，20250819、20250820首刷，应该多次回看、回味。
+
 # 5 二分查找 && 二叉查找树
 
 关于树，需要知道几种特殊的树的定义和性质：
 
 - 二叉树：每个节点最多有两个子节点的树。
 - 完全二叉树：除了最后一层外，其他层的节点都达到最大值，且最后一层的节点都集中在左侧。（**最后一层节点从左到右排列**）
-- 满二叉树：除最后一层无任何子节点外，每一层上的所有结点都有两个子结点的二叉树。
+- **满二叉树（国际上称完美二叉树）***：除最后一层无任何子节点外，每一层上的所有结点都有两个子结点的二叉树。也就是说，假设有 $h$ 层，那么该二叉树一共有 $2^h - 1$ 个节点。
+![alt text](image-32.png)
+
+- *：需要注意的是，国际国内上所说的满二叉树，定义不同。我们在这里指的满二叉树，一般默认是国内的定义，也即国际上说的**完美二叉树**的定义，对于国际上说的满二叉树如何定义，见下：
+![alt text](image-37.png)
+
+-----------------------------------
+
 - 平衡二叉树（AVL树）：任意节点的左右子树高度差不超过1的二叉树。
 - 二叉搜索树（BST树）：左子树的所有节点值都小于根节点值，右子树的所有节点值都大于根节点值。**中序遍历可以得到有序数列，同时BST树不一定是AVL树！！**
-![alt text](image-32.png)
+
 
 ## 5.1 二分查找
 
@@ -1483,7 +1604,7 @@ long long ans = 0;    // 存储答案
 
 ## 6.2 Leetcode 215 数组中第K大的元素——堆的灵活运用
 
-**注意：堆排很常见也很重要，务必掌握。** 本题采用建立大顶堆的方法。
+**注意：堆排很常见也很重要，很重要，很重要，务必掌握。** 本题采用建立大顶堆的方法。这题十分经典。
 
 ## 6.3 Leetcode 295 数据流中的中位数
 
@@ -1528,10 +1649,15 @@ public:
 
 ### 建立堆
 
-**我们必须搞清楚，我们可以在`O(n)`的时间内建立起一个堆，方法如下：（假设题目给我们了一个数组，使用数组建堆）**
+**我们必须搞清楚，我们可以在 $O(n\log(n))$ 的时间复杂度下，通过不断地插入元素建立一个堆。但是，这种方法比较慢，实际上我们一般采用调整一棵完全二叉树的形式，在 $O(n)$ 的时间内建立起一个堆，方法如下：（假设题目给我们了一个数组，使用数组建堆）**
 
 1. 首先，我们可以把数组当成一个完全二叉树。
-2. 然后从最后一个非叶子节点开始，依次向前调整，**采用“上溢”这种方法，注意，这种方法不可能需要“下溢”。** 使得每个节点都满足堆的性质。这样子，我们就可以在`O(n)`的时间内建立起一个堆。
+2. 然后从最后一个非叶子节点开始，依次向前调整，使得每个节点都满足堆的性质。这样子，我们就可以在`O(n)`的时间内建立起一个堆。
+
+严格证明：
+
+![alt text](image-36.png)
+如上图所示，上图中的树是一棵完全二叉树，但是并不是一棵完美二叉树。假设这棵树有 $n$ 个结点，那么如图所示，我们从最后一个非叶子结点开始调整堆，**我们的目的是，让以该结点为根结点的树满足堆的性质**，很显然，这一层最多需要调整的次数为 $1$ 次，而很容易想到（证明），该层的结点数至多有 $\lfloor n/4 \rfloor$ 个结点。接着，往上走一层，这一层最多需要调整的次数为 $2$ 次，而该层的结点数至多有 $\lfloor n/8 \rfloor$ 个结点。依次类推，我们一直推理到根节点，可以按照图中求出总的时间复杂度。然后我们对其根据等比数列的求和公式，可以算出最终的时间复杂度 $< O(n)$ 。
 
 ### 堆排序
 
