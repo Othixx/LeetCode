@@ -745,7 +745,7 @@ console.log(num); // 输出: 12345678901234567000（可能会丢失精度）
 
 ## 0.22 JS 空值合并运算符
 
-空值合并运算符（`??`）是 JavaScript 中的一种逻辑运算符，用于处理可能为 `null` 或 `undefined` 的值。它的作用是返回其左侧操作数，如果左侧操作数为 `null` 或 `undefined`，则返回右侧操作数。
+空值合并运算符（`??`）是 JavaScript 中的一种逻辑运算符，用于处理可能为 `null` 或 `undefined` 的值。它的作用是返回其左侧操作数，如果左侧操作数为 `null` 或 `undefined`，则返回右侧操作数，否则返回左侧操作数。
 ```javascript
 let a = null;
 let b = 5;
@@ -1547,8 +1547,6 @@ https://www.icourse163.org/learn/ZJU-93001?tid=1468825451#/learn/content?type=de
 ## 5.5 LeetCode 236 二叉树的最近公共祖先
 
 这个题，递归+分类讨论，没有任何套路，直接贴解法。**非常好的典型题。用于深刻理解递归。**
-
-![输入图片说明](imgs/lowestCommonAncestor.png)
 
 ```javascript
 var lowestCommonAncestor = function(root, p, q) {
