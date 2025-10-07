@@ -51,6 +51,16 @@
 
 乘法：$(a \times b) \% p = (a \% p \times b \% p) \% p$
 
+## 最大公约数、最小公倍数
+
+这两个基础的计算要会。最大公约数是gcd，最小公倍数是lcm。
+
+另外，$lcm(a, b) = (a * b) / gcd(a, b)$。
+
+至于如何去求gcd，我们采用欧几里得辗转相除法：
+
+$gcd(a,b) = gcd(b,a \% b)$
+
 # 0. C++要点
 
 ## 0.1 指针
@@ -1530,6 +1540,12 @@ let lowerBound = function (nums, target) {
 20250531已解决。这道题的难点和2439题一样，在于如何写出`check`函数。
 
 ![alt text](image-20.png)
+
+### 5.1.5 LeetCode 878 第N个神奇数字
+
+我的评价是这个题想到二分就迎刃而解了，没有想到就很难做。
+
+![alt text](image-42.png)
 
 ## 5.2 Leetcode 33 无序数组（旋转数组）二分查找
 
