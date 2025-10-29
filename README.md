@@ -1234,7 +1234,9 @@ System.out.println(str); // 'a'
 是一个很好的题，可以练一练。（20241103）
 
 ## 1.11 LeetCode 1094 拼车 差分
+
 （20241114）差分就是前缀和的逆过程。
+
 ![alt text](image.png)
 ![alt text](image-1.png)
 
