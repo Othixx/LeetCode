@@ -584,6 +584,8 @@ let max = Math.max(...nums.slice(0, 3));
 let min = Math.min(...nums.slice(0, 3));
 ```
 
+**另外需要特别注意的是，如果数组里面有`undefined`，那么`Math.max()`和`Math.min()`都会返回`NaN`。因此在使用这两个函数之前，一定要确保数组里面没有`undefined`**。
+
 ## 0.12 JS `Sort`排序数组
 
 **这一部分至关重要。**
