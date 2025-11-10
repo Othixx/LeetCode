@@ -1239,10 +1239,47 @@ System.out.println(str); // 'a'
 
 ## 1.11 LeetCode 1094 拼车 差分
 
-（20241114）差分就是前缀和的逆过程。
+（20241114）差分就是前缀和的逆过程。这道题应该是所有差分的基础。
 
 ![alt text](image.png)
 ![alt text](image-1.png)
+
+### 1.11.1 LeetCode 732 我的日程安排表III 差分
+
+这道题20251110首刷，也是差分的应用，只不过我们不能直接开按题意要求的那么大的数组，那么怎么办呢，我们用一个`Map`去维护。在中间求和的时候，差分数组里默认情况下就是0，这部分我们可以忽略不记。在下面贴出这道题的代码，后面会看应该好好理解：
+
+```javascript
+
+var MyCalendarThree = function() {
+    this.cnt = new Map()
+};
+
+/** 
+ * @param {number} startTime 
+ * @param {number} endTime
+ * @return {number}
+ */
+MyCalendarThree.prototype.book = function(startTime, endTime) {
+    this.cnt.set(startTime, (this.cnt.get(startTime) || 0) + 1)
+    this.cnt.set(endTime, (this.cnt.get(endTime) || 0) - 1)
+
+    let maxBook = 0
+    let ans = 0
+    const sortedKeys = Array.from(this.cnt.keys()).sort((a, b) => a - b)    // 对key而不是value排序
+    for (const key of sortedKeys) {
+        const freq = this.cnt.get(key)
+        maxBook += freq     // 可以直接跳过中间某些含0的数字，从而节省了内存
+        ans = Math.max(ans, maxBook)
+    }
+    return ans
+};
+
+/** 
+ * Your MyCalendarThree object will be instantiated and called as such:
+ * var obj = new MyCalendarThree()
+ * var param_1 = obj.book(startTime,endTime)
+ */
+```
 
 ## 1.12 二维前缀和
 
