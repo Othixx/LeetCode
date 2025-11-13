@@ -329,6 +329,12 @@ function example4() {
 
 总的来说，`function`关键字在JavaScript中扮演了多重角色，包括定义函数、构造函数和类。这使得JavaScript在面向对象编程方面具有很高的灵活性。
 
+### 0.2.1 Array, New Array(), []的区别和使用
+
+https://www.jianshu.com/p/75a45851b655
+
+![alt text](image-56.png)
+
 ## 0.3 JavaScript `map` 方法
 
 **注意！这里描述的是map方法而不是Map这种类。这里的map是和forEach相对应。**
@@ -387,7 +393,9 @@ https://www.infoq.cn/article/4UVdTsOA0qkxyCydCycB
 
 https://segmentfault.com/q/1010000022022918
 
-## 0.5 JavaScript 多维数组
+## 0.5 JavaScript 数组
+
+### 0.5.1 JavaScript 多维数组
 
 直接看例子：
 
@@ -399,7 +407,7 @@ for (let i = 0; i < n; i++) {
 }
 ```
 
-### 0.5.1 数组嵌套空数组对象
+### 0.5.2 数组嵌套空数组对象
 
 尤其注意，如果你要生成一个数组，里面的元素是空数组对象，那么你需要这样写：
 
@@ -411,6 +419,30 @@ for(let i = 0; i < n; i++){
 }
 ```
 
+### 0.5.3 Array.from()作为序列生成器
+
+在学习并查集的过程中，遇到一种很牛的写法：
+
+```javascript
+const parent = Array.from({ length: n }, (_, index) => index);
+```
+
+查阅官方文档后发现，`Array.from()` 方法从类似数组或可迭代对象创建一个新的，浅拷贝的数组实例。它接受两个参数：
+
+1. 一个类似数组或可迭代对象。
+2. 一个可选的映射函数，用于对每个元素进行处理。
+
+在这个例子中，`Array.from()` 方法被用来创建一个长度为 `n` 的新数组。第一个参数 `{ length: n }` 创建了一个具有指定长度的类数组对象。第二个参数 `(_, index) => index` 是一个映射函数，它接受两个参数：当前元素的值（在这里未使用，因此用 `_` 占位）和当前元素的索引。这个函数返回当前索引值，从而初始化数组，使得每个元素的值等于其索引。
+
+下面举一个使用了当前元素值的例子，带有真实数组时，映射函数的第一个参数是元素值，加深理解：
+
+```javascript
+Array.from([10, 20, 30], (v, i) => v + i)
+// 解释：i=0 => 10+0=10, i=1 => 20+1=21, i=2 => 30+2=32
+// 结果: [10, 21, 32]
+```
+
+而在我们之前的并查集中的实现方法中，源是 { length: N }，没有实际元素，所以“当前元素值”为 undefined，索引 i 仍然从 0 开始。
 
 ## 0.6 除法
 
@@ -2525,3 +2557,57 @@ var rob = function(root) {
 这个题20250706首刷，直接看题解，注意题解稍微有点绕，2是关键，要从下面的解释开始解读：
 
 ![alt text](image-27.png)
+
+# 13 复杂数据结构
+
+## 13.1 并查集
+
+【并查集(Union Find)】 https://www.bilibili.com/video/BV1LojAzfEoj/?share_source=copy_web&vd_source=adb76b0abd2583fe45600a97ce5e6760
+
+它的英文名字叫 Union-Find Set，也叫 Disjoint Set，意思是“不相交集合”。它是一种树型的数据结构，用于处理一些不相交集合的合并及查询问题（即所谓的并、查）。比如说，我们可以用并查集来判断一个森林中有几棵树、某个节点是否属于某棵树等。这个结构在很多重要的算法中都扮演着关键角色。比如说，判断一个图中有没有环，或者我们要处理网络中哪些节点是连通的，再比如 Kruskal 算法，用来构建最小生成树的时候，同样也会用到并查集。
+
+我们在实现一个并查集时，一般会包含三种操作：
+
+![alt text](image-57.png)
+
+我们需要一个数组，用来存储自己的父节点是谁。初始情况下，每个节点的父节点都是自己。当两个元素的父节点相同时，我们可以认为它们在同一个集合中。
+
+![alt text](image-58.png)
+
+对于初学者，上面的Python代码不难理解。但是随着元素越来越多，如果直接这样调用find查询那么查询效率会变得非常的低。
+
+为了优化，我们引入两个方法：路径压缩与按秩合并。路径压缩的思想是，在查询一个节点的祖先节点时，把它沿途经过的所有节点都直接挂在祖先节点下面。这样子，下次再查询这些节点时，就可以直接找到祖先节点了。按秩合并的思想是，在合并两个集合时，把节点数较少的集合挂在节点数较多的集合下面（当然，按秩合并还可以是把较深的树挂在较浅的树下面，甚至是把树的深浅和大小都当作秩来实现，此处不再赘述）。这样子，可以避免形成过深的树，从而提高查询效率。
+
+给出并查集的模板JS代码：
+
+```javascript
+class UnionFind {
+    constructor(n) {
+        // 创建一个大小为n的并查集
+        this.p = Array.from({ length: n }, (_, i) => i) // 初始化情况下，每个元素的父元素都是自己，p指parent
+        this.size = new Array(n).fill(1)    // 初始时每个集合都只有一个元素
+    }
+
+    find(x) {
+        if (this.p[x] !== x) {
+            this.p[x] = this.find(this.p[x])    // 递归查找，查找时同时进行路径压缩
+        }
+        return this.p[x]
+    }
+
+    union(a, b) {
+        const pa = this.find(a)
+        const pb = this.find(b)
+        if (pa === pb) return false // 当前的两个节点具有相同的祖先，挂在同一个集合里面，无需合并
+        if (this.size[pa] > this.size[pb]) {    // 把小的集合挂在大的集合下面
+            this.p[pb] = pa
+            this.size[pa] += this.size[pb]
+        }
+        else {
+            this.p[pa] = pb
+            this.size[pb] += this.size[pa]
+        }
+        return true
+    }
+}
+```
