@@ -43,7 +43,7 @@ var numberOfComponents = function(properties, k) {
         let cnt = 0
         a.sort((a, b) => a - b)
         for (let i = 0; i < a.length; i++) {
-            if (b.indexOf(a[i]) === -1) cnt++
+            if (b.indexOf(a[i]) !== -1) cnt++
             while (i + 1 < a.length && a[i] === a[i + 1]) i++
         }
         return cnt
@@ -61,7 +61,3 @@ var numberOfComponents = function(properties, k) {
     }
     return uf.connect
 };
-
-const properties = [[1,2],[1,1],[3,4],[4,5],[5,6],[7,7]]
-const k = 1
-console.log(numberOfComponents(properties, k))
