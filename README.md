@@ -2138,6 +2138,45 @@ $$max(|a - b|, |a + b|) >= max(|a|, |b|)$$
 
 这道题20251120首刷，本来是在练习并查集过程中刷到的，但是我把它归类为脑筋急转弯。转弯的点在于，如果相邻的点的距离都大于了`maxDiff`，那么这两个点是不可能连在一起的，就算由别的点相连也不行（因为别的点之间的距离肯定大于这两个点），想清楚这一点之后，你只需要每每判断相邻两个点是否属于同一类就可以。
 
+## 9.9 LeetCode 3551 数位和排序需要的最小交换次数 置换环
+
+这道题20251121首刷，首次了解到了**置换环**的思想。如果没想到置换环，那么这个题就解不出来。
+
+https://www.cnblogs.com/TTS-TTS/p/17047104.html
+
+![alt text](image-59.png)
+
+![alt text](image-60.png)
+
+所以，这道题就变成了计算出如果要交换成后续的样子，形成多少个置换环的问题。这是一个求连通分量数量的问题，使用并查集来解决。
+
+然而，在实现上面，仍然有技巧，我在这里贴上代码，来感受一下：
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var minSwaps = function(nums) {
+    const n = nums.length
+    const a = new Array(n)
+    for (let i = 0; i < n; i++) {
+        let s = 0
+        for (let x = nums[i]; x > 0; x = Math.floor(x / 10)) {
+            s += x % 10
+        }
+        a[i] = [s, nums[i], i]
+    }
+    a.sort((p, q) => p[0] !== q[0] ? p[0] - q[0] : p[1] - q[1])
+
+    const uf = new UnionFind(n)
+    for (let i = 0; i < n; i++) {
+        uf.union(i, a[i][2])
+    }
+    return n - uf.cc
+};
+```
+
 # 10 暴力与模拟
 
 这部分类型的题，没有技巧可循，考验的就是纯代码能力。**注意，这种类型的题一定要想办法在紧张的环境下，限制自己的时间做题。** 这里推荐几个不错的题：
