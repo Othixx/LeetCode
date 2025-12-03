@@ -377,7 +377,7 @@ let sub = s.slice(1, 3);    // 'os'
 
 它表示从0起始到（2-1）位置处结束。因此`slice(i,j)`代表从i开始j-1处结束。**注意，`s.slice()`方法并不会改变原来的`s`字符串中的数据！** 此外，如果你想要从i开始一直到最后，那么只需要`slice(i)`即可。
 
-**另外请特别注意，你不能使用迭代器（即`s[i]`）直接修改字符串的某一位，修改办法要么是字符串拼接，要么是把它先变成一个数组，在数组上修改，再把它重新变回字符串，要么就调用字符串的方法`replace()`**
+**另外请特别注意，你不能使用迭代器（即`s[i]`）直接修改字符串的某一位，修改办法要么是字符串拼接，要么是把它先变成一个数组，在数组上修改，再把它重新变回字符串，要么就调用字符串的方法`replace()`（这个方法我感觉不好用，暂时先不讲）**。
 
 ### 0.4.1 关于字符串中的`indexOf()`方法
 
@@ -819,17 +819,15 @@ console.log(c); // 输出: 5
 
 在LeetCode中，有很多题目需要用到优先队列（Priority Queue）或者堆这种数据结构。JavaScript本身并没有内置优先队列的数据结构，但我们可以使用第三方库`datastructures-js/priority-queue`来实现。这个库已经被附在LeetCode的代码编辑器中，可以直接使用。
 
-该库提供了 5 种主要的优先级队列类型，它们的区别主要在于底层实现和性能特性上：
+该库提供了 3 种主要的优先级队列类型，它们的区别主要在于底层实现和性能特性上：
 
 1. `MinPriorityQueue` - 最小优先级队列（优先级数字越小，优先级越高）
 
 2. `MaxPriorityQueue` - 最大优先级队列（优先级数字越大，优先级越高）
 
-3. `MinPriorityQueue` (基于堆实现)
+3. `PriorityQueue` (基于最小堆实现)
 
-4. `MaxPriorityQueue` (基于堆实现)
-
-5. `PriorityQueue` (基于最小堆实现)
+（注：库中同时提供了基于不同内部实现的具体实现变体，上述为主要 API）
 
 最常用的是前两种，因为它们提供了最直观的 API。我们将重点介绍 `MinPriorityQueue`。优先级值最小的元素位于队列前端。
 
@@ -851,8 +849,8 @@ minQueue.enqueue(8);
 
 // 方式二：提供元素和优先级（推荐，更清晰）
 minQueue.enqueue('task_medium', 2);
-minQueue.enqueue('task_low’, 5);
-minQueue.enqueue('task_high’, 1);
+minQueue.enqueue('task_low', 5);
+minQueue.enqueue('task_high', 1);
 // 现在队列： [‘task_high’ (prio:1), ‘task_medium’ (prio:2), ‘task_low’ (prio:5)]
 
 // 查看队首元素（优先级最高的，即最小的）但不移除

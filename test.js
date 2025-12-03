@@ -1,4 +1,3 @@
-let arr = []
-let oldArr = [1, 2, 3]
-arr = new Array(...oldArr)
-console.log(arr)
+let myMap = new Map([['a', 1], ['b', 2], ['c', 3]]);
+let firstEntry = myMap.entries().next().value
+console.log(firstEntry); // 输出: ['a', 1]
