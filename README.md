@@ -1210,6 +1210,96 @@ System.out.println(str); // 'a'
 
 本题20251201首刷，没什么难度，但是你过若干天从头写下来我觉得不容易。实现上我觉得有点反直觉，未来可以二刷。
 
+#### 1.1.1.3 LeetCode 2799 统计完全子数组的数目
+
+这道题20251203首刷，被我解决，但是从这道题中我领悟出，并不是所有的越长越合法型滑动窗口都是需要有`ans += left`这个过程。把里面的内在想清楚，有的时候加一个`n - right`反而会更好理解。
+
+这道题下面给出两个算法：
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var countCompleteSubarrays = function (nums) {
+    const set = new Set(nums)
+    const diffNum = set.size
+    const n = nums.length
+    const map = new Map()
+    let left = 0, ans = 0
+    for (let right = 0; right < nums.length; right++) {
+        if (map.has(nums[right])) {
+            map.set(nums[right], map.get(nums[right]) + 1)
+        }
+        else {
+            map.set(nums[right], 1)
+        }
+        while (map.size >= diffNum) {
+            let cnt = map.get(nums[left])
+            if (cnt === 1) map.delete(nums[left])
+            else map.set(nums[left], cnt - 1)
+            left++
+        }
+        ans += left
+    }
+    return ans
+};
+```
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var countCompleteSubarrays = function (nums) {
+    const set = new Set(nums)
+    const diffNum = set.size
+    const n = nums.length
+    const map = new Map()
+    let left = 0, ans = 0
+    for (let right = 0; right < nums.length; right++) {
+        if (map.has(nums[right])) {
+            map.set(nums[right], map.get(nums[right]) + 1)
+        }
+        else {
+            map.set(nums[right], 1)
+        }
+        if (map.size >= diffNum) {
+            while (map.size >= diffNum) {
+                ans += n - right
+                let cnt = map.get(nums[left])
+                if (cnt === 1) map.delete(nums[left])
+                else map.set(nums[left], cnt - 1)
+                left++
+            }
+        }
+    }
+    return ans
+};
+```
+
+第一个我觉得不如第二个好理解，当时一直调不出来，后面问了GPT一个问题：
+
+![alt text](image-63.png)
+
+其中有一句话是核心：**left是第一个使窗口缺失某种数的起点索引**，也就是在你后面right怎么加，left只要后退一个，就一定能够成为一个合法窗口的起点，所以我们每次right加1的时候，ans就可以直接加上left。起初我把while循环放在了一个if语句里面：
+
+```javascript
+if (map.size >= diffNum) {
+    while (map.size >= diffNum) {
+        let cnt = map.get(nums[left])
+        if (cnt === 1) map.delete(nums[left])
+        else map.set(nums[left], cnt - 1)
+        left++
+    }
+    ans += left
+}
+```
+
+这样子就不对了，就会漏解。
+
+所以滑动窗口有时还是十分的精妙。
+
 ## 1.2 哈希表散列函数的构造与冲突处理方法
 
 **本节参照ZJU的MOOC**。设计哈希表散列函数的构造中，要尽量避免冲突。下面讲两个点，一个是散列函数的构造，另一个是冲突的解决。
