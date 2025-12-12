@@ -902,6 +902,19 @@ pq.enqueue([3, 'task2', 'more data']);      // 自动提取 3 作为优先级
 - 获取队列大小（size）：$O(1)$
 - 建立堆（heapify）：$O(n)$
 
+此外，我们还可以去自定义一个优先级，比如下面的例子：
+
+```javascript
+// Car queue prioritizing newest, then cheapest
+const carsQueue = new PriorityQueue((a, b) => {
+  if (a.year > b.year) return -1;
+  if (a.year < b.year) return 1;
+  return a.price < b.price ? -1 : 1;
+});
+```
+
+这个思想和`sort()`方法的回调函数是类似的，需要注意的是当我们自定义优先级比较方法时，就不要具体初始化大根堆还是小根堆了，**直接使用`PriorityQueue`类即可**。
+
 ## 0.24 数组拷贝
 
 在刷题过程中，我们一般会对数组进行拷贝，下面列出常用的两种方法：
@@ -2041,6 +2054,38 @@ public:
 ### 6.4.2 LeetCode 703 数据流中的第K大元素
 
 这道题20251206首刷，也是脑子需要转个弯。我们把最大的K个元素放入小顶堆即可，那么堆顶就一定是第K大的元素，至于再小的元素，我们不用管，不需要入堆。所以每次add时候加入堆，如果堆的元素数量超过了K，那么弹出最小的堆顶，堆顶那个就是第K大的。
+
+### 6.4.3 LeetCode 1834 单线程CPU
+
+这道题20251212首刷，难点在模拟上。
+
+![alt text](image-65.png)
+
+以上三个步骤，理顺了先后才能解决这道题。下面给一个具体实现：
+
+```javascript
+let time = 0
+let p = 0
+// 边执行，边入队
+while (p < n) {
+    if (minQueue.size() === 0 && time < tasks[p][0]) {
+        time = tasks[p][0]
+    }
+    while (p < n && tasks[p][0] <= time) {
+        minQueue.enqueue([tasks[p][2], tasks[p][1]])
+        p++
+    }
+    if (minQueue.size() > 0) {
+        const temp = minQueue.dequeue()
+        time += temp[1]
+        order.push(temp[0])
+    }
+}
+// 全部都入队了，剩下来的依次按顺序执行
+while (minQueue.size() > 0) {
+    order.push(minQueue.dequeue()[0])
+}
+```
 
 ## 6.5 单调队列 
 
