@@ -1798,7 +1798,7 @@ var networkDelayTime = function(times, n, k) {
 
 ![alt text](image-66.png)
 
-因此值得二刷。
+另外，这道题的思想也可以用在130、1254两个题目上，几乎一模一样，因此值得二刷。
 
 # 5 二分查找 && 二叉查找树
 
