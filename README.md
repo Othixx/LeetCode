@@ -924,6 +924,10 @@ const carsQueue = new PriorityQueue((a, b) => {
 
 请注意，除了上面两种方式外，不再建议使用其他方式，因为容易出问题。
 
+## 0.25 数字转数字字符串
+
+使用`toString()`方法。或者`String(n)`。
+
 # 0. Java 要点
 
 为什么要用Java刷题呢，一是因为很多后端岗位普遍要求Java，二是因为CCF的一个首届CACC比赛必须使用C/C++/Python/Java四种语言中的一种。因此，我也会在这里记录一些Java的要点。
