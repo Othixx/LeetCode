@@ -543,7 +543,7 @@ console.log(firstElement) // 输出: 1
 
 ## 0.8 数字字符串转数字
 
-使用`parseInt()`方法。
+使用`parseInt()`方法。或者`Number(str)`方法。
 
 ## 0.9 JS `Map`
 
@@ -688,6 +688,8 @@ let arr = ["a", "b", "c"]
 let str = arr.join(" ")
 console.log(str) // 'a b c'
 ```
+
+而要把一个字符串按照某东西来进行分割，可以使用`split()`方法，下面的0.14就是讲解。
 
 ## 0.14 Nodejs ACM 模式 输入输出模板
 
