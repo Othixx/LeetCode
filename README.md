@@ -963,6 +963,18 @@ const carsQueue = new PriorityQueue((a, b) => {
 
 使用`toString()`方法。或者`String(n)`。
 
+## 0.26 与位运算相关的运算符优先级
+
+我们需要特别注意的是，比较运算的运算优先级高于按位运算！！！
+
+![alt text](image-72.png)
+
+但是，按位左移和按位右移的运算优先级高于比较运算！！！
+
+![alt text](image-73.png)
+
+以上两幅图来自于MDN。
+
 # 0. Java 要点
 
 为什么要用Java刷题呢，一是因为很多后端岗位普遍要求Java，二是因为CCF的一个首届CACC比赛必须使用C/C++/Python/Java四种语言中的一种。因此，我也会在这里记录一些Java的要点。
