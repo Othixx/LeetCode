@@ -1785,14 +1785,14 @@ var networkDelayTime = function (times, n, k) {
   dis[k - 1] = 0
   const done = Array(n).fill(false)
   while (true) {
-    let x = -1
+    let x = -1 // 标记当前的最短路节点下标
     for (let i = 0; i < n; i++) {
       if (!done[i] && (x < 0 || dis[i] < dis[x])) {
-        x = i
+        x = i // 找到未确定最短路的节点中，距离起点最近的节点
       }
     }
     if (x < 0) {
-      return Math.max(...dis)
+      return Math.max(...dis) // 所有节点的最短路都已确定，返回最大值
     }
     if (dis[x] === Infinity) {
       // 有节点无法到达
@@ -1853,6 +1853,18 @@ if (dx > dis[x]) {
 ```
 
 应该好好回味。
+
+此外，对于两种不同的实现，我们需要注意它们的时空复杂度：
+
+对于朴素实现，很显然，时间复杂度为 $O(n^2)$，空间复杂度为 $O(n^2)$（邻接矩阵存储）。
+
+对于堆优化实现：
+
+![alt text](image-74.png)
+
+其实严格来讲，时间复杂度应该为 $O(n + m \log m)$，只不过由于m远大于n，所以简化为 $O(m \log m)$。而我们知道，如果一个图稠密时（也就是这个图的边非常的多），数量接近于 $n^2$，那么 $m \log m$ 近似等于 $n^2 \log n^2$，也就是 $O(n^2 \log n)$（对数的2可以提取常数，进而被优化），这个时候就不如朴素实现了。
+
+大多数情况下，图论的题目都是稀疏图，因此堆优化的Dijkstra算法是更常用的。另外个人觉得，堆优化的Dijkstra算法更容易理解，朴素方法有些反直觉。
 
 ### 4.3.1 LeetCode 3650 边反转的最小路径总成本
 
