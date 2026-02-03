@@ -2023,6 +2023,18 @@ var findSafeWalk = function (grid, health) {
 
 那么既然我们使用的是Dijkstra的算法思想，就有可能一个点的最短路径被多次更新，直到它从队列中被取出为止。
 
+## 4.7 LeetCode 1334 阈值距离内邻居最少的城市 多源最短路 Floyd算法
+
+这道题20260203首刷，是多源最短路Floyd算法的鼻祖。Floyd算法本质上就是一个三维DP。我们直接来看灵神的讲解：
+
+https://leetcode.cn/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/solutions/2525946/dai-ni-fa-ming-floyd-suan-fa-cong-ji-yi-m8s51/
+
+![alt text](image-75.png)
+
+![alt text](image-76.png)
+
+有了状态转移方程之后，我们很好将它转化成记忆化搜索的版本，就实现了这个算法。时间与空间复杂度均为 $O(n^3)$ 。当然，鉴于目前对动态规划的理解还不够，后续的转化为递推以及空间优化暂时略过，后面再来补充。
+
 # 5 二分查找 && 二叉查找树
 
 关于树，需要知道几种特殊的树的定义和性质：
