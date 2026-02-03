@@ -975,6 +975,20 @@ const carsQueue = new PriorityQueue((a, b) => {
 
 以上两幅图来自于MDN。
 
+## 0.27 数组空槽
+
+我们先来看这么样一个示例：
+
+```javascript
+const arr = []
+arr[5] = 0
+console.log(arr) // [ <5 empty items>, 0 ]
+```
+
+很奇怪，我明明没有给出长度，但是JS竟然还能根据索引赋值（这就是弱类型语言的神奇之处）！在上面的代码中，我们创建了一个空数组`arr`，然后给它的第5个索引赋值为0。打印出来的结果显示，数组的前5个位置是空的，这些位置被称为“空槽”（holes）。
+
+![alt text](image-77.png)
+
 # 0. Java 要点
 
 为什么要用Java刷题呢，一是因为很多后端岗位普遍要求Java，二是因为CCF的一个首届CACC比赛必须使用C/C++/Python/Java四种语言中的一种。因此，我也会在这里记录一些Java的要点。
