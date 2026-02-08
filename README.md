@@ -2029,13 +2029,55 @@ var findSafeWalk = function (grid, health) {
 }
 ```
 
-### 4.6.2 LeetCOde 1824 最少侧跳次数
+### 4.6.2 LeetCode 1824 最少侧跳次数
 
 这道题20260101首刷，需要先转化成图的问题，然后使用0-1 BFS去解决。转化很巧妙：
 
 ![alt text](image-68.png)
 
 那么既然我们使用的是Dijkstra的算法思想，就有可能一个点的最短路径被多次更新，直到它从队列中被取出为止。
+
+### 4.6.3 LeetCode 310 最小高度树 分层BFS
+
+这道题20260208首刷，是一道十分经典的题目，非常适合二刷。
+
+这道题巧妙地结合了拓扑排序+分层BFS的思想。需要把这两个都搞懂才好理解。我一开始理解了半天。
+
+![alt text](image-78.png)
+
+上面已经是非常通俗的想法了，但是，第6步之后我还是不会写，因为我不知道什么时候该停止，换句话说就是怎么表示最后这个最小的点的条件？
+
+实际上，结合了官方题解，这道题需要搞清楚两个结论。第一个就是拓扑排序之后，剩下来最终的点要么是一个，要么是两个；第二个就是我们要尝试使用分层BFS，而不能使用普通的，因为实际上树就是一层一层的。
+
+接下来我们来尝试进行分析。首先是第一个问题，为什么最后要么剩一个点，要么剩两个点？
+
+![alt text](image-79.png)
+
+![alt text](image-80.png)
+
+第二个问题，为啥要使用分层？
+
+![alt text](image-81.png)
+
+体现在下面的关键代码片段：
+
+```javascript
+while (remainNodes > 2) {
+  const sz = queue.length
+  remainNodes -= sz
+  for (let i = 0; i < sz; i++) {
+    const curr = queue.shift()
+    for (const v of adj[curr]) {
+      degree[v]--
+      if (degree[v] === 1) {
+        queue.push(v)
+      }
+    }
+  }
+}
+```
+
+实在是有点意思啊，应该好好品味这道题。
 
 ## 4.7 LeetCode 1334 阈值距离内邻居最少的城市 多源最短路 Floyd算法
 
