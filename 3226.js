@@ -13,11 +13,11 @@ var minChanges = function (n, k) {
   if (bitSizeN < bitSizeK) return -1
   while (n > 0) {
     nArr.unshift(n % 2)
-    n /= 2
+    n = Math.floor(n / 2)
   }
   while (k > 0) {
     kArr.unshift(k % 2)
-    k /= 2
+    k = Math.floor(k / 2)
   }
   while (kArr.length < bitSizeN) {
     kArr.unshift(0)
