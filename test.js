@@ -1,3 +1,9 @@
-const str = "abc"
-const strArr = str.split("")
-console.log(strArr) // 输出: ['a', 'b', 'c']
+console.log(1 << 31)
+console.log((1 << 31).toString(2))
+console.log((1 << 31) - 1)
+console.log(((1 << 31) - 1).toString(2))
+console.log(1 << 30)
+console.log((1 << 30).toString(2))
+console.log(1 << 32)
+console.log((1 << 32).toString(2))
+console.log((-1).toString(2))
