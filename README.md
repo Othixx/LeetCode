@@ -1584,7 +1584,7 @@ class NumMatrix {
 
 ## 1.13 前缀和+哈希表 560 和为K的子数组、437 路径总和III
 
-这两道题很相似，一题是在数组中使用前缀和+哈希表，另一题是在树中使用递归+哈希表。你必须先弄明白 560 题（特殊情况），再来做437题（一般情况）。20250614首刷437，20240713首刷560。给一个437题的代码，细品：
+这一类型题，是典型的**枚举右，维护左**问题，这两道题很相似，一题是在数组中使用前缀和+哈希表，另一题是在树中使用递归+哈希表。你必须先弄明白 560 题（特殊情况），再来做437题（一般情况）。20250614首刷437，20240713首刷560。给一个437题的代码，细品：
 
 ```javascript
 const pathSum = function (root, targetSum) {
@@ -1643,6 +1643,40 @@ if (r >= 2) {
 ![alt text](image-62.png)
 
 搞清楚了上面两点之后，这道题基本上就是3728的套壳。
+
+### 1.13.3 LeetCode 1442 形成两个异或相等数组的三元组数目
+
+这道题同样也可以用枚举右，维护左的思想进行优化。
+
+![alt text](image-97.png)
+
+给出我的代码：
+
+```javascript
+/**
+ * @param {number[]} arr
+ * @return {number}
+ */
+var countTriplets = function (arr) {
+  let preXor = 0
+  let ans = 0
+  const map = new Map()
+  map.set(0, [0, 1])
+  for (let i = 0; i < arr.length; i++) {
+    preXor ^= arr[i]
+    if (map.has(preXor)) {
+      let [sum, cnt] = map.get(preXor)
+      ans += cnt * i - sum
+      sum += i + 1
+      cnt++
+      map.set(preXor, [sum, cnt])
+    } else {
+      map.set(preXor, [i + 1, 1])
+    }
+  }
+  return ans
+}
+```
 
 ## 1.14 LeetCode 41 缺失的第一个正数
 
