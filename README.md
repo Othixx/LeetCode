@@ -2983,6 +2983,29 @@ var insertBits = function (n, m, i, j) {
 
 ![alt text](image-98.png)
 
+### 9.10.10 LeetCode 1318 或运算的最小翻转次数
+
+这道题20260328首刷，如果单从题目去分析，其实很简单，不可能不会写。在这里我学到的是，它可以不用掩码的思想，可以不去开辟几个新的数组，而实现对一个数二进制的遍历。
+
+来看一下这个题的解法，非常的巧妙，每次移动一定的位数，就可以同时取到这么些位：
+
+```javascript
+var minFlips = function (a, b, c) {
+  const bitLength = (x) => (x === 0 ? 1 : 32 - Math.clz32(x))
+  // 求出最大位数
+  const maxBitLength = Math.max(bitLength(a), bitLength(b), bitLength(c))
+  let cnt = 0
+  for (let i = 0; i < maxBitLength; i++) {
+    const bit_a = (a >> i) & 1
+    const bit_b = (b >> i) & 1
+    const bit_c = (c >> i) & 1
+    if (bit_c === 0) cnt += bit_a + bit_b
+    else cnt += bit_a + bit_b === 0 ? 1 : 0
+  }
+  return cnt
+}
+```
+
 # 10 暴力与模拟
 
 这部分类型的题，没有技巧可循，考验的就是纯代码能力。**注意，这种类型的题一定要想办法在紧张的环境下，限制自己的时间做题。** 这里推荐几个不错的题：
