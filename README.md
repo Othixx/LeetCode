@@ -3006,6 +3006,41 @@ var minFlips = function (a, b, c) {
 }
 ```
 
+### 9.10.11 LeetCode 2401 最长优雅子数组
+
+这道题20260330首刷，是一道非常好的位运算题。这道题其实有两种解法，都需要巧妙用到位运算的性质。
+
+解法一是暴力枚举：
+
+![alt text](image-104.png)
+
+老实说我真没想到这题能用暴力枚举，但优雅子数组的长度确实没办法超过30。
+
+解法二才是我们真正应该学习的通用方法：滑动窗口。可问题在于，我们怎么样快速去判断右边新加入的一项是否会导致子数组不优雅？其实我们可以用$O(1)$的时间复杂度就实现：
+
+![alt text](image-105.png)
+
+如果发现不可行了，那就再把之前的给用异或的方法去除掉，综上代码如下（感觉看代码更加容易懂）：
+
+```javascript
+var longestNiceSubarray = function (nums) {
+  let ans = 0
+  let or = 0
+  let left = 0
+  for (let right = 0; right < nums.length; right++) {
+    while ((or & nums[right]) > 0) {
+      or ^= nums[left]
+      left++
+    }
+    or |= nums[right]
+    ans = Math.max(ans, right - left + 1)
+  }
+  return ans
+}
+```
+
+这是一道好题，非常值得二刷。
+
 # 10 暴力与模拟
 
 这部分类型的题，没有技巧可循，考验的就是纯代码能力。**注意，这种类型的题一定要想办法在紧张的环境下，限制自己的时间做题。** 这里推荐几个不错的题：
