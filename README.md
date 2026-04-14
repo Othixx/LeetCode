@@ -2877,6 +2877,43 @@ console.log(~-3) // 输出：2
 
 那我们如果要实际上将一个数现有的有效位的位数取反，其实很简单，只需要把它和`(1 << 有效位长度) - 1`进行异或即可。
 
+#### 9.10.1.6 连续与 （LeetCode 201 数字范围按位与）
+
+这道题其实有很多方法去解，一种是我想出来的思路，时间复杂度$O(\log n)$，当然还有更巧妙的$O(1)$解法，我们来看一下：
+
+![alt text](image-115.png)
+
+![alt text](image-116.png)
+
+当然在这里也贴一个我的解法，虽然有点慢但是好理解：
+
+```javascript
+/**
+ * @param {number} left
+ * @param {number} right
+ * @return {number}
+ */
+var rangeBitwiseAnd = function (left, right) {
+  // 只要两二进制位数不同就一定是0
+  const getBitLen = (x) => (x === 0 ? 1 : 32 - Math.clz32(x))
+  let ans = 0
+  let a = left,
+    b = right
+  while (getBitLen(a) === getBitLen(b)) {
+    let temp = 1 << (getBitLen(a) - 1)
+    if (temp === 1) {
+      if (a === 1 && b === 1) ans |= temp
+      break
+    } else {
+      ans |= temp
+      a ^= temp
+      b ^= temp
+    }
+  }
+  return ans
+}
+```
+
 ### 9.10.2 LeetCode 3226 使两个整数相等的位更改次数
 
 这道题20260216首刷。我们从位运算的角度去理解：
