@@ -3157,6 +3157,37 @@ var getSum = function (a, b) {
 }
 ```
 
+### 9.10.16 LeetCode 89 格雷编码
+
+这道题20260419首刷，我认为是一道结论题，做过就知道，没做过就不知道。基本上做了几分钟，发现用基本的算法没法解的时候，肯定就是用到某些数学方法。有两个非常巧妙的方法解决这个题，方法一采用归纳法，便于理解：
+
+![alt text](image-117.png)
+
+上面的正确性是显然的，证明略去，给出代码：
+
+```javascript
+/**
+ * @param {number} n
+ * @return {number[]}
+ */
+var grayCode = function (n) {
+  const ret = [0]
+  for (let i = 1; i <= n; i++) {
+    const m = ret.length
+    for (let j = m - 1; j >= 0; j--) {
+      ret.push(ret[j] | (1 << (i - 1)))
+    }
+  }
+  return ret
+}
+```
+
+第二种方法是构造格雷编码的公式：
+
+![alt text](image-118.png)
+
+证明同样略去，建议背公式。
+
 # 10 暴力与模拟
 
 这部分类型的题，没有技巧可循，考验的就是纯代码能力。**注意，这种类型的题一定要想办法在紧张的环境下，限制自己的时间做题。** 这里推荐几个不错的题：
