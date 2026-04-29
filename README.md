@@ -2566,7 +2566,7 @@ var longestSubarray = function (nums, limit) {
 
 这道题20260425首刷，起初和题解中的分治法想法一样，但是要用到ST表或者线段树，写起来很麻烦，也没学过，因此不知道该咋做。本题的单调栈解法非常的巧妙，但理解起来有比较困难，思维量大。
 
-![alt text](image-119.png)
+![alt text](image-121.png)
 
 ![alt text](image-120.png)
 
