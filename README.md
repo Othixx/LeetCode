@@ -598,6 +598,14 @@ map.forEach((value, key) => {
 
 forEach 方法是为 Map 对象设计的，它提供了一种更清晰和直接的方式来遍历键值对。如果你需要对 Map 进行复杂的遍历操作，使用 forEach 方法会是更好的选择。
 
+此外，为了统一，我们也可以使用`for...of`方法遍历`Map`，见下：
+
+```javascript
+for (const [key, value] of myMap) {
+  console.log(`${key} => ${value}`)
+}
+```
+
 ### 0.9.2 JS `Map`的常用方法
 
 常用的方法有：
