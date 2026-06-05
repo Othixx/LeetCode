@@ -2720,6 +2720,37 @@ public:
 
 另外，我们只需要两次遍历就可以了，第一遍把所有的得分大的字符串删完，第二遍再把所有得分小的字符串删完。我们可以思考一下，第二遍删的时候，是一定不会有得分大的字符串出现的，为什么自己证明。总的时间复杂度就达到了$O(n)$。
 
+## 8.8 LeetCode 1605 给定行和列的和求可行矩阵
+
+本题20260605首刷，又是一道贪心题，甚至有点脑筋急转弯的性质。连续多天的贪心让我感觉自己的思维有点跟不上，我们来看一下这个题目的思路：
+
+我们的解法就是，从最左上角的格子开始填，每次一行一行的填，每次填的格子都是允许的行列最大值（换言之，就是允许的行最大值和列最大值两个最大值再来个最小值，才能保证符合题意）。我们来看下实现代码：
+
+```javascript
+var restoreMatrix = function (rowSum, colSum) {
+  const m = rowSum.length,
+    n = colSum.length
+  const ans = new Array(m)
+  for (let i = 0; i < m; i++) {
+    ans[i] = new Array(n)
+  }
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      ans[i][j] = Math.min(rowSum[i], colSum[j])
+      rowSum[i] -= ans[i][j]
+      colSum[j] -= ans[i][j]
+    }
+  }
+  return ans
+}
+```
+
+最重要的是贪心正确性的证明，我认为我的脑子目前是想不出这个思路的：
+
+![alt text](image-132.png)
+
+所以本题目值得二刷。
+
 # 9 技巧题、数学题
 
 ## 9.1 LeetCode 136 只出现一次的数字（位运算）
