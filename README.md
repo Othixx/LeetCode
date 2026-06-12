@@ -3338,6 +3338,35 @@ var grayCode = function (n) {
 
 ![alt text](image-133.png)
 
+## 9.14 LeetCode 50 pow(x, n)
+
+本题20260612首刷，这是最经典的快速幂算法。实现快速幂一般有两个办法，一个是递归，一个是迭代，迭代的算法更优，但是不是很好理解，因此在这里初学，我们先来介绍递归算法：
+
+![alt text](image-135.png)
+
+来看一下代码的实现：
+
+```javascript
+var myPow = function (x, n) {
+  if (n < 0) {
+    return myPow(1 / x, -n)
+  }
+  if (n === 0) {
+    return 1
+  }
+  let res = myPow(x, Math.floor(n / 2))
+  res *= res
+  if (n % 2) {
+    res *= x
+  }
+  return res
+}
+```
+
+关于迭代算法，我们来看一下思路：
+
+![alt text](image-136.png)
+
 # 10 暴力与模拟
 
 这部分类型的题，没有技巧可循，考验的就是纯代码能力。**注意，这种类型的题一定要想办法在紧张的环境下，限制自己的时间做题。** 这里推荐几个不错的题：
