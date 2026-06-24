@@ -1,0 +1,72 @@
+name: Sync LeetCode Root README & Local Images to Hexo
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.HEXO_TOKEN }}
+      # 替换为你的 Hexo 仓库 用户名/仓库名
+      HEXO_REPO: Othixx/my-blog
+      TARGET_POST: leetcode-summary.md
+    steps:
+      # 拉取 LeetCode 仓库代码
+      - name: Checkout LeetCode source repo
+        uses: actions/checkout@v4
+
+      # 克隆 Hexo 博客仓库
+      - name: Clone Hexo blog repo
+        run: |
+          git clone https://${GH_TOKEN}@github.com/${HEXO_REPO}.git hexo-blog
+          mkdir -p hexo-blog/source/_posts
+          mkdir -p hexo-blog/source/img
+
+      # 复制仓库根目录所有图片
+      - name: Copy root image files
+        run: |
+          mkdir -p hexo-blog/source/img
+          find . -maxdepth 1 -type f \( -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" -o -name "*.gif" -o -name "*.svg" \) \
+            -exec cp {} hexo-blog/source/img/ \;
+
+      # 处理图片路径 + 生成 Hexo 文章（修复 --- 解析冲突）
+      - name: Rewrite image paths & generate hexo post
+        run: |
+          export LANG=en_US.UTF-8
+          SRC_README="./README.md"
+          OUT_FILE="hexo-blog/source/_posts/${{ env.TARGET_POST }}"
+          POST_TITLE="LeetCode 刷题汇总笔记"
+          NOW_DATE=$(date +"%Y-%m-%d %H:%M:%S")
+
+          # 替换图片相对路径 (10.png) → (../img/10.png)
+          sed -E 's/\(([a-zA-Z0-9_-]+\.(png|jpg|jpeg|gif|svg))\)/(\.\.\/img\/\1)/g' "$SRC_README" > temp_content.md
+
+          # 先清空输出文件，分步写入，规避 --- YAML 分隔符冲突
+          > "$OUT_FILE"
+          echo '---' >> "$OUT_FILE"
+          echo "title: ${POST_TITLE}" >> "$OUT_FILE"
+          echo "date: ${NOW_DATE}" >> "$OUT_FILE"
+          echo "tags: [LeetCode,算法,刷题笔记]" >> "$OUT_FILE"
+          echo "categories: 算法刷题" >> "$OUT_FILE"
+          echo '---' >> "$OUT_FILE"
+          echo "" >> "$OUT_FILE"
+          cat temp_content.md >> "$OUT_FILE"
+
+          rm temp_content.md
+
+      # 提交推送，无变更跳过
+      - name: Commit & push changed files
+        run: |
+          cd hexo-blog
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@github.com"
+          git add source/_posts/${{ env.TARGET_POST }} source/img/
+
+          if git diff --quiet --cached; then
+            echo "文件无更新，跳过推送"
+            exit 0
+          fi
+
+          git commit -m "Auto sync LeetCode README & root images"
+          git push
