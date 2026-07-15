@@ -50,6 +50,7 @@ jobs:
           echo "date: ${NOW_DATE}" >> "$OUT_FILE"
           echo "tags: [LeetCode,算法,刷题笔记]" >> "$OUT_FILE"
           echo "categories: 算法刷题" >> "$OUT_FILE"
+          echo "description: Othixx的算法指南" >> "$OUT_FILE"
           echo '---' >> "$OUT_FILE"
           echo "" >> "$OUT_FILE"
           cat temp_content.md >> "$OUT_FILE"
