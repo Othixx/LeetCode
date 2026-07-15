@@ -13,6 +13,10 @@ jobs:
       TARGET_POST: leetcode-summary.md
       IMG_TARGET_DIR: hexo-blog/source/img/LeetCode
     steps:
+      # 设置时区
+      - name: 设置东八区时区
+        run: echo "TZ=Asia/Shanghai" >> $GITHUB_ENV
+        
       # 拉取 LeetCode 仓库代码
       - name: Checkout LeetCode source repo
         uses: actions/checkout@v4
