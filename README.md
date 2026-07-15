@@ -51,9 +51,9 @@
 
 我们需要知道，关于加法和乘法运算是满足模运算的分配律的：
 
-加法：$(a + b) \% p = (a \% p + b \% p) \% p$
+加法：$(a + b) \bmod p = (a \bmod p + b \bmod p) \bmod p$
 
-乘法：$(a \times b) \% p = (a \% p \times b \% p) \% p$
+乘法：$(a \times b) \bmod p = (a \bmod p \times b \bmod p) \bmod p$
 
 ### 负数、减法的模运算
 
@@ -79,7 +79,7 @@ $$(a-b)\bmod m=\big((a \bmod m)-(b \bmod m)+m\big)\bmod m$$
 
 至于如何去求gcd，我们采用欧几里得辗转相除法：
 
-$gcd(a,b) = gcd(b,a \% b)$
+$gcd(a,b) = gcd(b,a \bmod b)$
 
 ## 关于LeetCode的一些执行机制
 
@@ -3666,9 +3666,9 @@ var maxSubArray = function (nums) {
 
 这道题是爬楼梯+斐波那契额数列的进阶，关键在于理解两个状态转移方程：
 
-$f[i] = (f[i - 1] + f[i - 2] + f[i - 3]) \% MOD$
+$f[i] = (f[i - 1] + f[i - 2] + f[i - 3]) \bmod MOD$
 
-$g[i] = (g[i - 1] + g[i - 2] + g[i - 3] + g[i - 4]) \% MOD$
+$g[i] = (g[i - 1] + g[i - 2] + g[i - 3] + g[i - 4]) \bmod MOD$
 
 两个状态转移方程如何理解？
 
