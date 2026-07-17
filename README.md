@@ -3988,6 +3988,12 @@ var rob = function (root) {
 
 ![alt text](image-152.png)
 
+## 12.19 LeetCode 2830 销售利润最大化
+
+这道题20260717首刷。仍旧是线性DP，与LeetCode2008题非常类似，主要是思路也很类似。个人认为这道题难在状态的定义上：
+
+![alt text](image-153.png)
+
 # 13 复杂数据结构
 
 ## 13.1 并查集
