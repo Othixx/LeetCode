@@ -1910,6 +1910,12 @@ var maxPalindromesAfterOperations = function (words) {
 }
 ```
 
+## 1.22 LeetCode 1504 统计全1子矩形
+
+这道题20260804首刷，其实之前做过类似的题，就是把一个二维的矩形压缩到一维。但是做题时没想到：
+
+![alt text](image-161.png)
+
 # 2. 链表
 
 ## 2.0 概述
