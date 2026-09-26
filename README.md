@@ -4209,6 +4209,12 @@ var maximumLength = function (nums, k) {
 
 ![alt text](image-170.png)
 
+## 12.24 LeetCode 1043 分隔数组以得到最大和
+
+这道题20260926首刷，难度还是在状态的定义上。个人认为一旦想清楚怎么定义状态，就能够很轻松实现：
+
+![alt text](image-172.png)
+
 # 13 复杂数据结构
 
 ## 13.1 并查集
