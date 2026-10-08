@@ -2901,6 +2901,14 @@ var restoreMatrix = function (rowSum, colSum) {
 
 ![alt text](image-171.png)
 
+## 8.11 LeetCode 2673 使二叉树所有路径值相等的最小代价
+
+本题20261008首刷，非常的巧妙，这种题只能够多练习，多体会：
+
+![alt text](image-173.png)
+
+![alt text](image-174.png)
+
 # 9 技巧题、数学题
 
 ## 9.1 LeetCode 136 只出现一次的数字（位运算）
