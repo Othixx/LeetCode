@@ -1428,6 +1428,65 @@ print(str[0:3:2]) # "hl"
 print(str[::-1]) # "olleh"，这个方法也常用来反转字符串，请注意由于会开辟新空间，因此时空复杂度都是O(n)的。
 ```
 
+## 0.3 Python for循环
+
+Python中的`for`循环可以遍历任何可迭代对象，如列表、元组、字符串等。下面是一个简单的例子：
+
+```python
+for i in range(10):
+    print(i)
+```
+
+上面这段代码会逐行依次输出0到9。请注意，Python也是一个以0作为起点的语言。如果要遍历列表，我们采用下面的方式：
+
+```python
+for i in range(len(nums)):  # 这种方法同JS比较像
+    print(nums[i])
+```
+
+或者采用
+
+```python
+for num in nums:
+    print(num)
+```
+
+如果我们要倒着遍历一个列表，我们可以采用下面的方式：
+
+```python
+for i in range(len(nums) - 1, -1, -1):
+    print(nums[i])
+```
+
+或者
+
+```python
+for num in reversed(nums):
+    print(num)
+```
+
+## 0.4 Python 格式化输出
+
+这一节我们来简单说说保留小数位数、以及整数补充前导0的输出方法：
+
+### 0.4.1 保留小数位数
+
+```python
+n = float(input())
+print(f"{n:.3f}")
+```
+
+![alt text](image-176.png)
+
+### 0.4.2 整数补充前导0
+
+```python
+n = int(input())
+print(f"{n:03d}")
+```
+
+![alt text](image-177.png)
+
 # 1. 哈希表与字符串、数组、双指针、滑动窗口、前缀和、差分
 
 ## 1.1 滑动窗口
