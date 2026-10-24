@@ -2223,6 +2223,8 @@ var maxPalindromesAfterOperations = function (words) {
 
 **本节基于LeetCode 92、206。**
 
+（20261024已能独立解决）
+
 针对链表倒序，使用迭代法。从头结点开始遍历，设置两个指针，curr和prev。curr指向当前节点，prev指向当前节点的前一个节点。每次迭代，将curr的next指向prev，然后prev和curr都向后移动一位。直到curr为空，prev就是新的头结点。同时，需要暂存curr的next节点，以免丢失。
 
 还请记住一个性质。当遍历完链表，curr会指向null。而prev会指向最后一个节点。所以，prev就是新的头结点。
